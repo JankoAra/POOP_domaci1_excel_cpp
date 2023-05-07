@@ -25,24 +25,6 @@ public:
 protected:
 	string inputValue;
 	Table2* myTable;
-	/*
-public:
-	enum ColumnLetters { A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z };
-	Cell(string startValue = "", int row = 0, ColumnLetters col = A) {
-		this->inputValue = startValue;
-		this->row = row;
-		this->column = col;
-	}
-	string getInputValue() const { return inputValue; }
-	virtual void setInputValue(string val) { inputValue = val; }
-	virtual char getFormat() = 0;
-	virtual string getFormattedValue() const = 0;
-protected:
-	string inputValue;
-	int row;
-	ColumnLetters column;
-
-	*/
 };
 
 
