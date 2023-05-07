@@ -1,0 +1,53 @@
+{
+"globalColumnFormats": ["T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","N","N"],
+"globalColumnDecimals": ["2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","10","1"],
+"cells": [{
+"row": 0,
+"column": 0,
+"value": "janko",
+"format": "T",
+"decimals": -1
+},
+{
+"row": 0,
+"column": 25,
+"value": "9",
+"format": "N",
+"decimals": 1
+},
+{
+"row": 1,
+"column": 10,
+"value": "1.43",
+"format": "N",
+"decimals": 4
+},
+{
+"row": 3,
+"column": 3,
+"value": "hejho",
+"format": "T",
+"decimals": -1
+},
+{
+"row": 5,
+"column": 6,
+"value": "13.04.1234.",
+"format": "D",
+"decimals": -1
+},
+{
+"row": 10,
+"column": 5,
+"value": "12.6666666",
+"format": "N",
+"decimals": 5
+},
+{
+"row": 30,
+"column": 24,
+"value": "",
+"format": "N",
+"decimals": 10
+}
+]}

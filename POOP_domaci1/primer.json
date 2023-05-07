@@ -1,0 +1,51 @@
+{
+  "globalColumnFormats": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "globalColumnDecimals": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "cells": [
+    {
+      "row": 1,
+      "column": 1,
+      "format": "n",
+      "value": "32.421",
+      "decimals": 1
+    },
+    {
+      "row": 2,
+      "column": 1,
+      "format": "t",
+      "value": "neka vrednost",
+      "decimals": -1
+    },
+    {
+      "row": 11,
+      "column": 1,
+      "format": "d",
+      "value": "10.12.3201.",
+      "decimals": -1
+    },
+    {
+      "row": 3,
+      "column": 12,
+      "format": "n",
+      "value": "1",
+      "decimals": 11
+    },
+    {
+      "row": 1,
+      "column": 11,
+      "format": "n",
+      "value": "123",
+      "decimals": 1
+    }
+  ]
+}
