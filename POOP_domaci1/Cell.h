@@ -21,7 +21,7 @@ public:
 	static string cellDescriptionInJson(int row, int column, Cell* cell);
 
 	//odredjivanje formata celije u tabeli, row pocinje od 1
-	static char getFormat(int row, char col, Table2* table);
+	//static char getFormat(int row, char col, Table2* table);
 protected:
 	string inputValue;
 	Table2* myTable;

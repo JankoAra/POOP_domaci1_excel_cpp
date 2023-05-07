@@ -125,13 +125,13 @@ void Table2::insertCellValue() {
 		isFormula = true;
 		try {
 			//formulu mozemo upisati samo u celiju formatiranu kao broj
-			if (Cell::getFormat(row, column, this) != 'N') throw FormulaDestinationNotNumber();
+			if (Table2::getCellFormat(row, column) != 'N') throw FormulaDestinationNotNumber();
 		}
 		catch (FormulaDestinationNotNumber& err) { printError(err); return; }
 	}
 
 	try {
-		char format = Cell::getFormat(row, column, this);
+		char format = Table2::getCellFormat(row, column);
 		int decimalsToSet = 0;
 		if (format == 'N') decimalsToSet = oldCell ? ((NumberCell*)oldCell)->getDecimalSpaces() : columnDecimals[column - 65];
 		newCell = createNewCellOfFormat(format, line, decimalsToSet);

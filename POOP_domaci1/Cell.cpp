@@ -18,8 +18,8 @@ string Cell::cellDescriptionInJson(int row, int column, Cell* cell) {
 }
 
 //row se broji od 1, col je veliko slovo
-char Cell::getFormat(int row, char col, Table2* table) {
-	Cell* cell = table->getCell(row, col);
-	if (cell) return cell->getFormat();
-	return table->getColumnFormats()[col - 65];
-}
+//char Cell::getFormat(int row, char col, Table2* table) {
+//	Cell* cell = table->getCell(row, col);
+//	if (cell) return cell->getFormat();
+//	return table->getColumnFormats()[col - 65];
+//}
