@@ -76,6 +76,8 @@ public:
 	bool newFormatFitsInput(int format, string input) const;
 	bool newFormatFitsInput(char format, string input) const;
 
+	~Table2();
+
 private:
 	map<int, map<int, Cell*>> cells;	//prvi kljuc je red, drugi kljuc je kolona, vrednost je pokazivac na celiju
 	char columnFormats[26];		// formati kolona

@@ -22,6 +22,9 @@ public:
 
 	//odredjivanje formata celije u tabeli, row pocinje od 1
 	//static char getFormat(int row, char col, Table2* table);
+
+
+	virtual ~Cell(){}
 protected:
 	string inputValue;
 	Table2* myTable;

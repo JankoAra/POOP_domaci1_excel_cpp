@@ -413,6 +413,16 @@ bool Table2::newFormatFitsInput(char format, string input) const {
 	return newFormatFitsInput(f, input);
 }
 
+Table2::~Table2(){
+	clearStack(undoStack);
+	clearStack(redoStack);
+	for (auto& row : cells) {
+		for (auto& col : row.second) {
+			delete col.second;
+		}
+	}
+}
+
 map<int, Cell*> Table2::cellsInColumn(int column) {
 	map<int, Cell*> res;
 	for (auto& rowDesc : cells) {
