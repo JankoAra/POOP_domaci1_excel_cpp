@@ -20,11 +20,6 @@ public:
 	Cell* getCell(int row, int column) const;
 	void setCell(int row, int column, Cell* newCell);
 
-	enum ColumnLetters { A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z };
-	//brojanje redova pocinje od 1, kolone su enum slova A-Z
-	void setCell(int row, ColumnLetters column, Cell* newCell);
-	Cell* getCell(int row, ColumnLetters column) const;
-
 	//brojanje redova pocinje od 1, kolone su char A-Z
 	void setCell(int row, char column, Cell* newCell);
 	Cell* getCell(int row, char column) const;

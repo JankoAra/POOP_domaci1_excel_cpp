@@ -48,15 +48,6 @@ void Table::setCell(int row, int column, Cell* newCell) {
 	}
 }
 
-void Table::setCell(int row, ColumnLetters column, Cell* newCell) {
-	if (row < 1) throw CellNotExists();
-	setCell(row - 1, (int)column, newCell);
-}
-
-Cell* Table::getCell(int row, ColumnLetters column) const {
-	if (row < 1) throw CellNotExists();
-	return getCell(row - 1, (int)column);
-}
 
 void Table::setCell(int row, char column, Cell* newCell) {
 	if (row < 1) throw CellNotExists();
