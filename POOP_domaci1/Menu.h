@@ -2,9 +2,10 @@
 #define _MENU_CLASS
 
 #include <string>
-#include "Parser.h"
 
 using namespace std;
+
+class Parser;
 
 class Menu {
 public:

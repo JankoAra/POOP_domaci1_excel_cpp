@@ -2,6 +2,7 @@
 #include "Table2.h"
 #include "Errors.h"
 #include <iostream>
+#include "Parser.h"
 using namespace std;
 
 int main() {
