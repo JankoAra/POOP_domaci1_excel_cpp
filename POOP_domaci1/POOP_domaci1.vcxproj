@@ -140,7 +140,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Action.cpp" />
-    <ClCompile Include="ActionRecord.h" />
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="CSVParser.cpp" />
     <ClCompile Include="DateCell.cpp" />
@@ -152,8 +151,6 @@
     <ClCompile Include="NumberCell.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="quickTest.cpp" />
-    <ClCompile Include="StateMachine.cpp" />
-    <ClCompile Include="Table.cpp" />
     <ClCompile Include="Table2.cpp" />
     <ClCompile Include="TextCell.cpp" />
   </ItemGroup>
@@ -168,8 +165,6 @@
     <ClInclude Include="Menu.h" />
     <ClInclude Include="NumberCell.h" />
     <ClInclude Include="Parser.h" />
-    <ClInclude Include="StateMachine.h" />
-    <ClInclude Include="Table.h" />
     <ClInclude Include="Table2.h" />
     <ClInclude Include="TextCell.h" />
   </ItemGroup>

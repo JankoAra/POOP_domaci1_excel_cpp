@@ -21,13 +21,7 @@
     <ClCompile Include="Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StateMachine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Parser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Table.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Cell.cpp">
@@ -57,9 +51,6 @@
     <ClCompile Include="JSONParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ActionRecord.h">
-      <Filter>Header Files</Filter>
-    </ClCompile>
     <ClCompile Include="Formula.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -74,13 +65,7 @@
     <ClInclude Include="Errors.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="StateMachine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Parser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Table.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Cell.h">
