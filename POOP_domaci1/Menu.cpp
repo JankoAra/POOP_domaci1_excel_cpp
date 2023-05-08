@@ -100,8 +100,8 @@ void Menu::printErrorMsg(string errmsg) {
 	cout << "\033[1;31m" << errmsg << "!" << "\033[0m" << endl;
 }
 
-Parser* Menu::makeParser() const {
-	cout << "Unesite ime/putanju fajla: ";
+Parser* Menu::makeParser() {
+	cout << "Unesite ime/putanju fajla (obavezna ekstenzija .csv ili .json): ";
 	string fName;
 	regex pattern("^\\s*([^\\.]+)\\.([A-Za-z0-9]+)\\s*$");
 	smatch match;
@@ -117,7 +117,7 @@ Parser* Menu::makeParser() const {
 	return nullptr;
 }
 
-bool Menu::askToSave() const {
+bool Menu::askToSave() {
 	cout << "Da li zelite da sacuvate tabelu? [d/n]";
 	regex pattern("^[dn]$");
 	string answer;

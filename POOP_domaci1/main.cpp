@@ -1,10 +1,12 @@
 #include "Menu.h"
+#include "Table2.h"
 #include "Errors.h"
 #include <iostream>
 using namespace std;
 
 int main() {
 	Menu menu;
+	Table2* table = nullptr;
 	bool done = false;
 	Parser* loadParser = nullptr;
 	Parser* saveParser = nullptr;
@@ -20,19 +22,19 @@ int main() {
 			//oslobadjanje dinamicki zauzete memorije
 			if (loadParser) { if (saveParser == loadParser) saveParser = nullptr; delete loadParser; }
 			if (saveParser) delete saveParser;
-			if (menu.getTable()) delete menu.getTable();
+			if (table) delete table;
 			done = true;
 			break;
 		}
 		//pravljenje prazne tabele
-		if (menu.getTable() == nullptr) menu.setTable(new Table2());
+		if (table == nullptr) table = new Table2();
 		if (choice == 2) {
 			//ucitavanje tabele iz fajla
 			try {
 				if (loadParser) { delete loadParser; loadParser = nullptr; }
 				loadParser = menu.makeParser();
 				if (loadParser == nullptr) throw ParserNullPointer();
-				loadParser->loadTable(menu.getTable());
+				loadParser->loadTable(table);
 			}
 			catch (exception& e) {
 				printError(e);
@@ -42,7 +44,7 @@ int main() {
 		bool innerDone = false;
 		while (!done && !innerDone) {
 			try {
-				if (choice >= 0 && choice <= 10) menu.getTable()->printTable();	//ne stampa tabelu ako je bila pogresna opcija
+				if (choice >= 0 && choice <= 10) table->printTable();	//ne stampa tabelu ako je bila pogresna opcija
 				menu.displayMainMenu();
 				choice = menu.getMenuInputFromConsole();
 				switch (choice) {
@@ -54,37 +56,37 @@ int main() {
 						if (loadParser) saveParser = loadParser;
 						else saveParser = menu.makeParser();
 						if (saveParser == nullptr) throw ParserNullPointer();
-						saveParser->saveTable(menu.getTable());
+						saveParser->saveTable(table);
 					}
 					if (loadParser) { if (saveParser == loadParser) saveParser = nullptr; delete loadParser; loadParser = nullptr; }
 					if (saveParser) { delete saveParser; saveParser = nullptr; }
-					if (menu.getTable()) { delete menu.getTable(); menu.setTable(nullptr); }
+					if (table) { delete table; table = nullptr; }
 					done = true;
 					break;
 				case 1:		//promeni vrednost polja
-					menu.getTable()->insertCellValue();
+					table->insertCellValue();
 					break;
 				case 2:		//formatiraj tabelu
-					menu.getTable()->formatTable();
+					table->formatTable();
 					break;
 				case 3:		//undo
-					menu.getTable()->undo();
+					table->undo();
 					break;
 				case 4:		//redo
-					menu.getTable()->redo();
+					table->redo();
 					break;
 				case 5:		//save
 					if (saveParser) { delete saveParser; saveParser = nullptr; }
 					if (loadParser) saveParser = loadParser;
 					else saveParser = menu.makeParser();
 					if (saveParser == nullptr) throw ParserNullPointer();
-					saveParser->saveTable(menu.getTable());
+					saveParser->saveTable(table);
 					break;
 				case 6:		//save as
 					if (saveParser) { delete saveParser; saveParser = nullptr; }
 					saveParser = menu.makeParser();
 					if (saveParser == nullptr) throw ParserNullPointer();
-					saveParser->saveTable(menu.getTable());
+					saveParser->saveTable(table);
 					break;
 				case 7:		//save and quit
 					break;
@@ -100,10 +102,10 @@ int main() {
 						if (loadParser) saveParser = loadParser;
 						else saveParser = menu.makeParser();
 						if (saveParser == nullptr) throw ParserNullPointer();
-						saveParser->saveTable(menu.getTable());
+						saveParser->saveTable(table);
 					}
-					delete menu.getTable();	//delete current table
-					menu.setTable(nullptr);
+					delete table;	//delete current table
+					table = nullptr;
 					innerDone = true;
 					break;
 				default:
