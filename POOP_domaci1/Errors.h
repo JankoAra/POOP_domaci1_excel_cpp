@@ -3,9 +3,10 @@
 
 
 #include <exception>
+#include <iostream>
 using namespace std;
 
-void printError(exception& err);
+inline void printErrorMsg(exception& err) { cout << "\033[1;31m" << err.what() << "!" << "\033[0m" << endl; }
 
 class OptionNonExistent : public exception {
 public:

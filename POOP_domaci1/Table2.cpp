@@ -127,7 +127,7 @@ void Table2::insertCellValue() {
 			//formulu mozemo upisati samo u celiju formatiranu kao broj
 			if (Table2::getCellFormat(row, column) != 'N') throw FormulaDestinationNotNumber();
 		}
-		catch (FormulaDestinationNotNumber& err) { printError(err); return; }
+		catch (FormulaDestinationNotNumber& err) { printErrorMsg(err); return; }
 	}
 
 	try {
@@ -147,7 +147,7 @@ void Table2::insertCellValue() {
 		clearStack(redoStack);
 	}
 	catch (exception& e) {
-		printError(e);
+		printErrorMsg(e);
 	}
 }
 

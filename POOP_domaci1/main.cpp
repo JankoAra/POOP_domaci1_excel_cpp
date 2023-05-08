@@ -38,7 +38,7 @@ int main() {
 				loadParser->loadTable(table);
 			}
 			catch (exception& e) {
-				printError(e);
+				printErrorMsg(e);
 				continue;
 			}
 		}
@@ -114,7 +114,7 @@ int main() {
 				}
 			}
 			catch (exception& e) {
-				printError(e);
+				printErrorMsg(e);
 			}
 		}
 	}

@@ -33,7 +33,7 @@ int main2() {
 	//	cout << expression << endl << deref << endl << post << endl << Formula::calculatePostfix(post);*/
 	//}
 	//catch (exception& e) {
-	//	printError(e);
+	//	printErrorMsg(e);
 	//}
 
 	JSONParser parser("fajl.json");
