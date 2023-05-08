@@ -24,11 +24,8 @@ public:
 
 	//pita za ime fajla nad kojim se radi i na osnovu ekstenzije fajla vraca odgovarajuci parser
 	static Parser* makeParser();
-	
-	//ispisuje c karakter lineLen puta, pa novi red
-	static void printLineOfChars(char c, int lineLen = DEFAULT_LINE_LEN);
 
-	//ispisuje prosledjeni string kao gresku
+	//ispisuje prosledjeni string kao gresku crvenim slovima
 	static void printErrorMsg(string errmsg);
 
 	static const int DEFAULT_LINE_LEN = 50;

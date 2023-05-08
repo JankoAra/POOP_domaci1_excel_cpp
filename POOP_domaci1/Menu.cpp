@@ -13,14 +13,15 @@ void Menu::displayStartMenu() {
 	startMenuOptions.push_back("UCITAJ POSTOJECU TABELU");			//2
 	startMenuOptions.push_back("UGASI PROGRAM");					//0
 
+	auto printLn = [](char c) {string line(DEFAULT_LINE_LEN, c); cout << line << endl; };
 
 	cout << "EXCEL by Janko" << endl;
-	printLineOfChars('-');
+	printLn('-');
 	for (int i = 0; i < startMenuOptions.size(); i++) {
 		int num = (i == startMenuOptions.size() - 1) ? 0 : i + 1;
 		cout << num << ". " << startMenuOptions[i] << endl;
 	}
-	printLineOfChars('-');
+	printLn('-');
 	cout << "Unesite vas izbor: ";
 }
 
@@ -38,13 +39,14 @@ void Menu::displayMainMenu() {
 	mainMenuOptions.push_back("VRATI SE NA POCETNI MENI");			//10
 	mainMenuOptions.push_back("UGASI PROGRAM");						//0
 
-	printLineOfChars('-');
+	auto printLn = [](char c) {string line(DEFAULT_LINE_LEN, c); cout << line << endl; };
+	printLn('-');
 	cout << "GLAVNI MENI" << endl;
 	for (int i = 0; i < mainMenuOptions.size(); i++) {
 		int num = (i == mainMenuOptions.size() - 1) ? 0 : i + 1;
 		cout << num << ". " << mainMenuOptions[i] << endl;
 	}
-	printLineOfChars('-');
+	printLn('-');
 	cout << "Unesite vas izbor: ";
 }
 
@@ -53,20 +55,22 @@ pair<char, int> Menu::chooseFormatMenu() {
 	options.push_back("Text");
 	options.push_back("Number");
 	options.push_back("Date");
+
 	cout << "Izaberite format:" << endl;
 	for (int i = 0; i < options.size(); i++) {
 		cout << i + 1 << ". " << options[i] << endl;
 	}
-	string choice;
-	smatch match;
-	regex pattern("^\\s*([1-3])\\s*$");
 	int timeout = 3;
+	int format = 0;		//1=Text; 2=Number; 3=Date;
 	do {
-		getline(cin, choice);
-		if (regex_search(choice, match, pattern)) break;
+		format = getMenuInputFromConsole();
+		if (format>0 && format<=options.size()) break;
 		cout << "Nepostojeca opcija, Pokusajte ponovo" << endl;
 	} while (--timeout);
-	int format = stoi(match[1].str());	//1=Text; 2=Number; 3=Date;
+	if (timeout == 0) {
+		cout << "Format nije uspesno izabran. Koristice se Text format" << endl;
+		format = 1;
+	}
 	char formatChar = format == 1 ? 'T' : (format == 2 ? 'N' : 'D');
 	int decimals = 0;
 	if (format == 2) {
@@ -82,7 +86,6 @@ pair<char, int> Menu::chooseFormatMenu() {
 
 
 int Menu::getMenuInputFromConsole() {
-	//cout << "Unesite vas izbor: ";
 	regex pattern2("^\\s*\\d{1,2}\\s*$");	//cita jednocifrene i dvocifrene brojeve izmedju blanko znakova
 	string line;
 	getline(cin, line);
@@ -121,7 +124,7 @@ bool Menu::askToSave() {
 	cout << "Da li zelite da sacuvate tabelu? [d/n]";
 	regex pattern("^[dn]$");
 	string answer;
-	int timeout = 3;
+	int timeout = 2;
 	do {
 		getline(cin, answer);
 		if (regex_match(answer, pattern)) {
@@ -132,9 +135,4 @@ bool Menu::askToSave() {
 	} while (--timeout);
 	cout << "Opcija nije uspesno izabrana. Tabela se nece cuvati" << endl;
 	return false;
-}
-
-void Menu::printLineOfChars(char c, int lineLen) {
-	string line(lineLen, c);
-	cout << line << endl;
 }
