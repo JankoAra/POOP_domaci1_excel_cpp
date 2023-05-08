@@ -7,9 +7,9 @@ using namespace std;
 
 class Formula {
 public:
-	//friend class Table2;
+	//friend class Table;
 
-	Formula(string exp, Table2* t);
+	Formula(string exp, Table* t);
 
 	string getExpression() const { return expression; }
 
@@ -21,7 +21,7 @@ public:
 	
 	
 private:
-	Table2* table;
+	Table* table;
 	string expression;
 	static string getNextToken(string& input, int& index);
 	static string getNextTokenPostfix(string& postfix, int& index);

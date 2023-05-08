@@ -6,7 +6,7 @@
 #include "JSONParser.h"
 int main2() {
 	//try {
-	//	Table2 table;
+	//	Table table;
 	//	TextCell* tc1 = new TextCell(&table,"janko");
 	//	NumberCell* tc2 = new NumberCell(&table, "5.5", 4);
 	//	TextCell* tc3 = new TextCell(&table, "trt");
@@ -14,13 +14,13 @@ int main2() {
 	//	NumberCell* tc5 = new NumberCell(&table, ".2", 2);
 	//	NumberCell* tc6 = new NumberCell(&table, "20", 1);
 	//	NumberCell* tc7 = new NumberCell(&table, "100", 0);
-	//	table.setCell(1, Table2::A, tc1);
-	//	table.setCell(3, Table2::E, tc2);
-	//	table.setCell(3, Table2::A, tc3);
-	//	table.setCell(5, Table2::B, tc4);
-	//	table.setCell(5, Table2::W, tc5);
-	//	table.setCell(10, Table2::A, tc6);
-	//	table.setCell(10, Table2::E, tc7);
+	//	table.setCell(1, Table::A, tc1);
+	//	table.setCell(3, Table::E, tc2);
+	//	table.setCell(3, Table::A, tc3);
+	//	table.setCell(5, Table::B, tc4);
+	//	table.setCell(5, Table::W, tc5);
+	//	table.setCell(10, Table::A, tc6);
+	//	table.setCell(10, Table::E, tc7);
 	//	//table.format();
 	//	table.printTable();
 	//	string exp = "= w5 + 1 + 3-E3-4/1*aa2";

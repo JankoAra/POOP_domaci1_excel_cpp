@@ -7,7 +7,7 @@ using namespace std;
 
 int main() {
 	Menu menu;
-	Table2* table = nullptr;
+	Table* table = nullptr;
 	bool done = false;
 	Parser* loadParser = nullptr;
 	Parser* saveParser = nullptr;
@@ -28,7 +28,7 @@ int main() {
 			break;
 		}
 		//pravljenje prazne tabele
-		if (table == nullptr) table = new Table2();
+		if (table == nullptr) table = new Table();
 		if (choice == 2) {
 			//ucitavanje tabele iz fajla
 			try {

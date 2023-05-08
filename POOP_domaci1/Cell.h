@@ -5,11 +5,11 @@
 
 using namespace std;
 
-class Table2;
+class Table;
 
 class Cell {
 public:
-	Cell(Table2* t, string input = "") :inputValue(input), myTable(t) {}
+	Cell(Table* t, string input = "") :inputValue(input), myTable(t) {}
 
 	string getInputValue() const { return inputValue; }
 	virtual void setInputValue(string val) { inputValue = val; }
@@ -21,13 +21,13 @@ public:
 	static string cellDescriptionInJson(int row, int column, Cell* cell);
 
 	//odredjivanje formata celije u tabeli, row pocinje od 1
-	//static char getFormat(int row, char col, Table2* table);
+	//static char getFormat(int row, char col, Table* table);
 
 
 	virtual ~Cell(){}
 protected:
 	string inputValue;
-	Table2* myTable;
+	Table* myTable;
 };
 
 

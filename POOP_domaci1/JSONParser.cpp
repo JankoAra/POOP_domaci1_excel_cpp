@@ -9,7 +9,7 @@
 #include <sstream>
 #include <regex>
 
-void JSONParser::loadTable(Table2* table) {
+void JSONParser::loadTable(Table* table) {
 	ifstream file(fileName);
 
 	if (!file.is_open()) {
@@ -62,7 +62,7 @@ void JSONParser::loadTable(Table2* table) {
 	file.close();
 }
 
-void JSONParser::saveTable(Table2* table) {
+void JSONParser::saveTable(Table* table) {
 	ofstream file(fileName);
 	if (!file.is_open()) throw FileNotOpen();
 	file << "{\n";

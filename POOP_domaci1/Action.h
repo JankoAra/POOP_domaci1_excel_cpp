@@ -5,7 +5,7 @@
 #include <map>
 #include <string>
 
-class Table2;
+class Table;
 
 using namespace std;
 
@@ -23,7 +23,7 @@ struct Action {
 	Action() {}
 
 	//konstruktor za sve slucajeve, r i c se broje od nule, imaju vrednost -1 ako nisu relevantni za slucaj
-	Action(int r, int c, string oldVal, string newVal, char newFormat, int newDecimals, Table2* table);
+	Action(int r, int c, string oldVal, string newVal, char newFormat, int newDecimals, Table* table);
 
 	static Action reverseAction(Action& action);
 };

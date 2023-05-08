@@ -17,12 +17,12 @@
 #include <cctype>
 #include <algorithm>
 
-Table2::Table2() {
+Table::Table() {
 	fill(columnFormats, columnFormats + 26, 'T');
 	fill(columnDecimals, columnDecimals + 26, 2);
 }
 
-Cell* Table2::getCell(int row, int column) const {
+Cell* Table::getCell(int row, int column) const {
 	auto rowIterator = cells.find(row);
 	if (rowIterator == cells.end()) return nullptr;		// ne postoji ni jedna celija u zadatom redu
 	auto columnIterator = rowIterator->second.find(column);
@@ -30,7 +30,7 @@ Cell* Table2::getCell(int row, int column) const {
 	return columnIterator->second;
 }
 
-void Table2::setCell(int row, int column, Cell* newCell) {
+void Table::setCell(int row, int column, Cell* newCell) {
 	if (newCell == nullptr) {
 		//ako postavljamo nullptr, brisemo celiju
 		auto rowIterator = cells.find(row);
@@ -48,31 +48,31 @@ void Table2::setCell(int row, int column, Cell* newCell) {
 	}
 }
 
-void Table2::setCell(int row, ColumnLetters column, Cell* newCell) {
+void Table::setCell(int row, ColumnLetters column, Cell* newCell) {
 	if (row < 1) throw CellNotExists();
 	setCell(row - 1, (int)column, newCell);
 }
 
-Cell* Table2::getCell(int row, ColumnLetters column) const {
+Cell* Table::getCell(int row, ColumnLetters column) const {
 	if (row < 1) throw CellNotExists();
 	return getCell(row - 1, (int)column);
 }
 
-void Table2::setCell(int row, char column, Cell* newCell) {
+void Table::setCell(int row, char column, Cell* newCell) {
 	if (row < 1) throw CellNotExists();
 	column = toupper(column);
 	if (column < 'A' || column>'Z') return;
 	setCell(row - 1, column - 'A', newCell);
 }
 
-Cell* Table2::getCell(int row, char column) const {
+Cell* Table::getCell(int row, char column) const {
 	if (row < 1) throw CellNotExists();
 	column = toupper(column);
 	if (column < 'A' || column>'Z') return nullptr;
 	return getCell(row - 1, column - 'A');
 }
 
-void Table2::setCell(string cellName, Cell* cell) {
+void Table::setCell(string cellName, Cell* cell) {
 	if (cellName.length() < 2) throw CellNotExists();
 	if (!isalpha(cellName[0])) throw CellNotExists();
 	if (!isdigit(cellName[1])) throw CellNotExists();
@@ -81,7 +81,7 @@ void Table2::setCell(string cellName, Cell* cell) {
 	return setCell(row, column, cell);
 }
 
-Cell* Table2::getCell(string cellName) const {
+Cell* Table::getCell(string cellName) const {
 	if (cellName.length() < 2) throw CellNotExists();
 	if (!isalpha(cellName[0])) throw CellNotExists();
 	if (!isdigit(cellName[1])) throw CellNotExists();
@@ -90,17 +90,17 @@ Cell* Table2::getCell(string cellName) const {
 	return getCell(row, column);
 }
 
-char Table2::getCellFormat(int row, int column) const {
+char Table::getCellFormat(int row, int column) const {
 	Cell* cell = getCell(row, column);
 	if (cell) return cell->getFormat();
 	return columnFormats[column];
 }
 
-char Table2::getCellFormat(int row, char column) const {
+char Table::getCellFormat(int row, char column) const {
 	return getCellFormat(row - 1, column - 65);
 }
 
-void Table2::insertCellValue() {
+void Table::insertCellValue() {
 	//Izbor celije
 	cout << "Unesite celiju koju menjate(npr. C8 ili c8)" << endl;
 	regex cellNamePattern("^\\s*([A-Za-z])([1-9]\\d{0,5})\\s*$");	//ogranicene kolone A-Z(a-z) i redovi 1-999.999
@@ -125,13 +125,13 @@ void Table2::insertCellValue() {
 		isFormula = true;
 		try {
 			//formulu mozemo upisati samo u celiju formatiranu kao broj
-			if (Table2::getCellFormat(row, column) != 'N') throw FormulaDestinationNotNumber();
+			if (Table::getCellFormat(row, column) != 'N') throw FormulaDestinationNotNumber();
 		}
 		catch (FormulaDestinationNotNumber& err) { printErrorMsg(err); return; }
 	}
 
 	try {
-		char format = Table2::getCellFormat(row, column);
+		char format = Table::getCellFormat(row, column);
 		int decimalsToSet = 0;
 		if (format == 'N') decimalsToSet = oldCell ? ((NumberCell*)oldCell)->getDecimalSpaces() : columnDecimals[column - 65];
 		newCell = createNewCellOfFormat(format, line, decimalsToSet);
@@ -152,7 +152,7 @@ void Table2::insertCellValue() {
 }
 
 
-void Table2::printTable() const {
+void Table::printTable() const {
 	// Racunaj maksimalne sirine kolona i najveci redni broj reda
 	vector<int> columnWidths(27, 1);
 	int maxRowNumber = 0;
@@ -208,7 +208,7 @@ void Table2::printTable() const {
 
 }
 
-void Table2::undo(bool redoFlag) {
+void Table::undo(bool redoFlag) {
 	if (undoStack.empty()) return;
 	Action record = undoStack.top();
 	undoStack.pop();
@@ -252,7 +252,7 @@ void Table2::undo(bool redoFlag) {
 	}
 }
 
-void Table2::redo() {
+void Table::redo() {
 	if (redoStack.empty()) {
 		cout << "Redo stek prazan" << endl;
 		return;
@@ -264,7 +264,7 @@ void Table2::redo() {
 	undo(true);	//undo(true) je redo
 }
 
-void Table2::changeCellFormat(int row, char column, char formatToSet, int decimals) {
+void Table::changeCellFormat(int row, char column, char formatToSet, int decimals) {
 	//decimals parametar bitan samo ako menjamo format u number
 	Cell* oldCell = getCell(row, column);
 	string cellValue = oldCell != nullptr ? oldCell->getInputValue() : "";
@@ -279,7 +279,7 @@ void Table2::changeCellFormat(int row, char column, char formatToSet, int decima
 	setCell(row, column, newCell);	// brise oldCell iz memorije
 }
 
-void Table2::changeRowFormat(int row, char formatToSet, int decimals) {
+void Table::changeRowFormat(int row, char formatToSet, int decimals) {
 	//provera da li novi format odgovara svim postojecim vrednostima u redu
 	for (auto& rowDesc : cells[row - 1]) {
 		Cell* cell = getCell(row - 1, rowDesc.first);	//oldCell ne bi trebalo da moze da bude nullptr
@@ -306,7 +306,7 @@ void Table2::changeRowFormat(int row, char formatToSet, int decimals) {
 	}
 }
 
-void Table2::changeColumnFormat(char column, char formatToSet, int decimals) {
+void Table::changeColumnFormat(char column, char formatToSet, int decimals) {
 	//provera da li novi format odgovara svim vrednostima u koloni
 	for (auto& rowCell : cellsInColumn(column)) {
 		Cell* cell = rowCell.second;
@@ -337,7 +337,7 @@ void Table2::changeColumnFormat(char column, char formatToSet, int decimals) {
 	}
 }
 
-void Table2::formatTable() {
+void Table::formatTable() {
 	cout << "Unesite celiju, red ili kolonu koju menjate(npr. C8 ili c8; A ili a; 3)" << endl;
 	regex cellNamePattern("^\\s*([A-Za-z])([1-9]\\d{0,5})\\s*$");
 	regex rowPattern("^\\s*([1-9]\\d{0,5})\\s*$");
@@ -378,7 +378,7 @@ void Table2::formatTable() {
 	clearStack(redoStack);
 }
 
-Cell* Table2::createNewCellOfFormat(int format, string input, int decimals) {
+Cell* Table::createNewCellOfFormat(int format, string input, int decimals) {
 	switch (format) {
 	case 1:
 		return new TextCell(this, input);
@@ -390,12 +390,12 @@ Cell* Table2::createNewCellOfFormat(int format, string input, int decimals) {
 	return nullptr;
 }
 
-Cell* Table2::createNewCellOfFormat(char format, string input, int decimals) {
+Cell* Table::createNewCellOfFormat(char format, string input, int decimals) {
 	int f = format == 'T' ? 1 : (format == 'N' ? 2 : 3);
 	return createNewCellOfFormat(f, input, decimals);
 }
 
-bool Table2::newFormatFitsInput(int format, string input) const {
+bool Table::newFormatFitsInput(int format, string input) const {
 	switch (format) {
 	case 1:
 		return true;
@@ -408,12 +408,12 @@ bool Table2::newFormatFitsInput(int format, string input) const {
 	return false;
 }
 
-bool Table2::newFormatFitsInput(char format, string input) const {
+bool Table::newFormatFitsInput(char format, string input) const {
 	int f = format == 'T' ? 1 : (format == 'N' ? 2 : 3);
 	return newFormatFitsInput(f, input);
 }
 
-Table2::~Table2(){
+Table::~Table(){
 	clearStack(undoStack);
 	clearStack(redoStack);
 	for (auto& row : cells) {
@@ -423,7 +423,7 @@ Table2::~Table2(){
 	}
 }
 
-map<int, Cell*> Table2::cellsInColumn(int column) {
+map<int, Cell*> Table::cellsInColumn(int column) {
 	map<int, Cell*> res;
 	for (auto& rowDesc : cells) {
 		for (auto& columnDesc : rowDesc.second) {
@@ -433,11 +433,11 @@ map<int, Cell*> Table2::cellsInColumn(int column) {
 	return res;
 }
 
-map<int, Cell*> Table2::cellsInColumn(char column) {
+map<int, Cell*> Table::cellsInColumn(char column) {
 	return cellsInColumn(toupper(column) - 65);
 }
 
-void Table2::clearStack(stack<Action>& stack) {
+void Table::clearStack(stack<Action>& stack) {
 	while (!stack.empty()) {
 		stack.pop();
 	}

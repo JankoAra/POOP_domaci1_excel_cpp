@@ -9,7 +9,7 @@
 #include <cctype>
 #include "NumberCell.h"
 
-Formula::Formula(string exp, Table2* t) {
+Formula::Formula(string exp, Table* t) {
 	table = t;
 	regex blanks("\\s+");
 	expression = regex_replace(exp, blanks, "");

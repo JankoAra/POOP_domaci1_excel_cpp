@@ -22,8 +22,8 @@ class JSONParser :public Parser {
 public:
 	JSONParser(string fName) :Parser(fName) {}
 
-	virtual void loadTable(Table2* table) override;
-	virtual void saveTable(Table2* table) override;
+	virtual void loadTable(Table* table) override;
+	virtual void saveTable(Table* table) override;
 
 
 	vector<char> getCharsFromJsonArray(string jsonArray) const;

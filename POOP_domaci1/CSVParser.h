@@ -7,8 +7,8 @@ class CSVParser : public Parser {
 public:
 	CSVParser(string fName):Parser(fName){}
 
-	virtual void loadTable(Table2* table) override;
-	virtual void saveTable(Table2* table) override;
+	virtual void loadTable(Table* table) override;
+	virtual void saveTable(Table* table) override;
 };
 
 

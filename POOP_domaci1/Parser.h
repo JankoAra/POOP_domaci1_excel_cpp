@@ -8,8 +8,8 @@ using namespace std;
 class Parser{
 public:
 	Parser(string fName):fileName(fName){}
-	virtual void loadTable(Table2* table) = 0;
-	virtual void saveTable(Table2* table) = 0;
+	virtual void loadTable(Table* table) = 0;
+	virtual void saveTable(Table* table) = 0;
 	int setFileNameAndChooseFileFormat();
 	string getFileName() { return fileName; }
 protected:

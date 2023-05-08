@@ -8,7 +8,7 @@ using namespace std;
 
 class NumberCell : public Cell {
 public:
-	NumberCell(Table2* t, string input = "", int decimals = 2) :Cell(t, input), decimalSpaces(decimals) {
+	NumberCell(Table* t, string input = "", int decimals = 2) :Cell(t, input), decimalSpaces(decimals) {
 		if (!validInputForFormat(input)) throw CellInputError();
 		setInputValue(input);
 	}
@@ -36,7 +36,7 @@ public:
 	static bool staticValidInput(string input);
 private:
 	//string inputValue iz Cell
-	//Table2* myTable iz Cell
+	//Table* myTable iz Cell
 	int decimalSpaces;
 };
 

@@ -8,7 +8,7 @@ using namespace std;
 class DateCell : public Cell {
 public:
 	//DateCell(string startValue = "", int row = 0, ColumnLetters col = A) :Cell(startValue, row, col) {}
-	DateCell(Table2* t, string input = "") :Cell(t, input) {
+	DateCell(Table* t, string input = "") :Cell(t, input) {
 		if (!validInputForFormat(input)) throw CellInputError();
 		setInputValue(input);
 	}

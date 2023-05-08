@@ -4,7 +4,7 @@
 
 #include "Table2.h"
 
-Action::Action(int r, int c, string oldVal, string newVal, char newFormat, int newDecimals, Table2* table) {
+Action::Action(int r, int c, string oldVal, string newVal, char newFormat, int newDecimals, Table* table) {
 	row = r;
 	column = c;
 	oldCellValue = oldVal;

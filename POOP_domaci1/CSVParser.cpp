@@ -5,7 +5,7 @@
 #include <sstream>
 #include "TextCell.h"
 
-void CSVParser::loadTable(Table2* table){
+void CSVParser::loadTable(Table* table){
 	ifstream file(fileName);
 
 	if (!file.is_open()) {
@@ -27,7 +27,7 @@ void CSVParser::loadTable(Table2* table){
 	file.close();
 }
 
-void CSVParser::saveTable(Table2* table){
+void CSVParser::saveTable(Table* table){
 	ofstream file(fileName);
 	if (!file.is_open()) throw FileNotOpen();
 	//racunanje najveceg reda

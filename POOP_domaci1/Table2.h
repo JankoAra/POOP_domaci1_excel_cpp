@@ -1,5 +1,5 @@
-#ifndef _TABLE2_CLASS
-#define _TABLE2_CLASS
+#ifndef _TABLE_CLASS
+#define _TABLE_CLASS
 
 #include <map>
 #include <vector>
@@ -12,10 +12,10 @@ using namespace std;
 class Cell;
 
 
-class Table2 {
+class Table {
 public:
 	friend class Formula;
-	Table2();
+	Table();
 	//brojanje redova i kolona pocinje od 0
 	Cell* getCell(int row, int column) const;
 	void setCell(int row, int column, Cell* newCell);
@@ -76,7 +76,7 @@ public:
 	bool newFormatFitsInput(int format, string input) const;
 	bool newFormatFitsInput(char format, string input) const;
 
-	~Table2();
+	~Table();
 
 private:
 	map<int, map<int, Cell*>> cells;	//prvi kljuc je red, drugi kljuc je kolona, vrednost je pokazivac na celiju
@@ -93,4 +93,4 @@ private:
 
 
 
-#endif // !_TABLE2_CLASS
+#endif // !_TABLE_CLASS
