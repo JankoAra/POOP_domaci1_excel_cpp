@@ -116,13 +116,15 @@ void Table::insertCellValue() {
 		isFormula = true;
 		try {
 			//formulu mozemo upisati samo u celiju formatiranu kao broj
-			if (Table::getCellFormat(row, column) != 'N') throw FormulaDestinationNotNumber();
+			
+			//if (Table::getCellFormat(row, column) != 'N') throw FormulaDestinationNotNumber();
 		}
 		catch (FormulaDestinationNotNumber& err) { printErrorMsg(err); return; }
 	}
 
 	try {
 		char format = Table::getCellFormat(row, column);
+		if (isFormula) format = 'N';
 		int decimalsToSet = 0;
 		if (format == 'N') decimalsToSet = oldCell ? ((NumberCell*)oldCell)->getDecimalSpaces() : columnDecimals[column - 65];
 		newCell = createNewCellOfFormat(format, line, decimalsToSet);

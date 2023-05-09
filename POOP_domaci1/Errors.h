@@ -6,6 +6,7 @@
 #include <iostream>
 using namespace std;
 
+//ispis poruke o gresci u crvenoj boji
 inline void printErrorMsg(exception& err) { cout << "\033[1;31m" << err.what() << "!" << "\033[0m" << endl; }
 
 class OptionNonExistent : public exception {

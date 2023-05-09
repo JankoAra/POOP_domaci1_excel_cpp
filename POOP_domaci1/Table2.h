@@ -50,7 +50,7 @@ public:
 
 	void printTable() const;
 
-	void undo(bool redoFlag=false);
+	void undo(bool redoFlag = false);
 
 	void redo();
 
@@ -81,7 +81,7 @@ private:
 	stack<Action> undoStack;
 	stack<Action> redoStack;
 
-	
+
 
 	void clearStack(stack<Action>& stack);
 };

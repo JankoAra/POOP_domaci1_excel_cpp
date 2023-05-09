@@ -3,6 +3,7 @@
 
 #include "Table2.h"
 #include <string>
+#include <vector>
 using namespace std;
 
 class Formula {
@@ -26,6 +27,7 @@ private:
 	static string getNextToken(string& input, int& index);
 	static string getNextTokenPostfix(string& postfix, int& index);
 	bool invalidExpression = false;
+	vector<string> referencedCells;
 
 	//menja reference na celije za vrednosti celija
 	string dereferenceCells() const;

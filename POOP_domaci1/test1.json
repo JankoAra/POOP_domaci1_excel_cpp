@@ -1,0 +1,39 @@
+{
+"globalColumnFormats": ["N","N","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T"],
+"globalColumnDecimals": ["3","4","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2"],
+"cells": [{
+"row": 0,
+"column": 0,
+"value": "34.2",
+"format": "N",
+"decimals": 3
+},
+{
+"row": 0,
+"column": 1,
+"value": "2",
+"format": "N",
+"decimals": 4
+},
+{
+"row": 0,
+"column": 25,
+"value": "1",
+"format": "N",
+"decimals": 1
+},
+{
+"row": 1,
+"column": 25,
+"value": "=a1-b1",
+"format": "N",
+"decimals": 14
+},
+{
+"row": 3,
+"column": 1,
+"value": "",
+"format": "D",
+"decimals": -1
+}
+]}
