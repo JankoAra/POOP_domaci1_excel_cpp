@@ -17,6 +17,13 @@
 },
 {
 "row": 0,
+"column": 4,
+"value": "4",
+"format": "N",
+"decimals": 5
+},
+{
+"row": 0,
 "column": 25,
 "value": "1",
 "format": "N",
@@ -28,6 +35,13 @@
 "value": "=a1-b1",
 "format": "N",
 "decimals": 14
+},
+{
+"row": 2,
+"column": 4,
+"value": "=a1-e1",
+"format": "N",
+"decimals": 2
 },
 {
 "row": 3,

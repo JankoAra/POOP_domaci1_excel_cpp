@@ -4,7 +4,10 @@
 #include <iostream>
 #include "Formula.h"
 #include "JSONParser.h"
-int main2() {
+int main() {
+	Table table;
+	NumberCell* n1 = new NumberCell(&table, "=aa11*e3e3*b2121-b9b9-20b+a1-a2.2/a10-2.*j1");
+	n1->getReferencedCells();
 	//try {
 	//	Table table;
 	//	TextCell* tc1 = new TextCell(&table,"janko");
@@ -36,8 +39,8 @@ int main2() {
 	//	printErrorMsg(e);
 	//}
 
-	JSONParser parser("fajl.json");
+	/*JSONParser parser("fajl.json");
 	string jsonCellString = "{\n\"row\": 0,\n\"column\": 0,\n\"value\": \"janko\",\n\"format\": \"T\",\n\"decimals\": -1\n}";
-	JSONCell cell = parser.readJsonCell(jsonCellString);
+	JSONCell cell = parser.readJsonCell(jsonCellString);*/
 	return 0;
 }

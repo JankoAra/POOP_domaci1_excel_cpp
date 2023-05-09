@@ -32,7 +32,7 @@ private:
 	//menja reference na celije za vrednosti celija
 	string dereferenceCells() const;
 
-	//expression moze sadrzati samo brojeve i operande, bez referenci na celije, bez razmaka, bez =
+	//expression moze sadrzati samo brojeve i operatore, bez referenci na celije, bez razmaka, bez =
 	static string infixToPostfix(string expression);
 
 	//izracunaj postfix izraz
@@ -42,4 +42,3 @@ private:
 
 
 #endif // !_FORMULA_CLASS
-

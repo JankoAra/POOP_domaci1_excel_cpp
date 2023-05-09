@@ -57,3 +57,23 @@ bool NumberCell::staticValidInput(string input) {
 	if (!regex_match(input, numberPattern) && !regex_search(input, expressionPattern)) return false;
 	return true;
 }
+
+vector<string> NumberCell::getReferencedCells() const{
+	vector<string> refCells;
+	if (inputValue[0] != '=') return refCells;
+	regex cellNamePattern("(#|[^A-Za-z0-9])([A-Za-z]\\d+)($|[^A-Za-z0-9])");
+	sregex_iterator iter(inputValue.begin(), inputValue.end(), cellNamePattern);
+	sregex_iterator end;
+
+	while (iter != end) {
+		smatch match = *iter;
+		string cellName = match[2].str();
+		cellName[0] = toupper(cellName[0]);
+		refCells.push_back(cellName);
+		iter++;
+	}
+	for (auto& a : refCells) {
+		cout << a << " ";
+	}
+	return refCells;
+}

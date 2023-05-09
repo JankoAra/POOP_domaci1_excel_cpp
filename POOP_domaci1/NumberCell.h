@@ -3,6 +3,7 @@
 
 #include "Cell.h"
 #include "Errors.h"
+#include <vector>
 
 using namespace std;
 
@@ -34,6 +35,9 @@ public:
 
 	//vraca true ako je input string koji predstavlja broj ili je formula
 	static bool staticValidInput(string input);
+
+
+	vector<string> getReferencedCells() const;
 private:
 	//string inputValue iz Cell
 	//Table* myTable iz Cell

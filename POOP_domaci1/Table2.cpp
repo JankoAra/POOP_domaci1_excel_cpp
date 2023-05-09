@@ -3,7 +3,6 @@
 #include "DateCell.h"
 #include "NumberCell.h"
 #include "Errors.h"
-#include "Formula.h"
 #include "Menu.h"
 #include "Action.h"
 #include "Cell.h"
@@ -114,12 +113,6 @@ void Table::insertCellValue() {
 	if (regex_search(line, formulaPattern)) {
 		//formula
 		isFormula = true;
-		try {
-			//formulu mozemo upisati samo u celiju formatiranu kao broj
-			
-			//if (Table::getCellFormat(row, column) != 'N') throw FormulaDestinationNotNumber();
-		}
-		catch (FormulaDestinationNotNumber& err) { printErrorMsg(err); return; }
 	}
 
 	try {

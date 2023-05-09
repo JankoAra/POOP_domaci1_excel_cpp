@@ -81,8 +81,6 @@ private:
 	stack<Action> undoStack;
 	stack<Action> redoStack;
 
-
-
 	void clearStack(stack<Action>& stack);
 };
 
