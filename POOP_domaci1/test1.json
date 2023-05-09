@@ -1,53 +1,67 @@
 {
-"globalColumnFormats": ["N","N","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T"],
-"globalColumnDecimals": ["3","4","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2"],
+"globalColumnFormats": ["T","N","N","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T"],
+"globalColumnDecimals": ["0","2","4","2","2","2","2","2","2","2","0","2","2","2","2","2","2","2","2","2","2","2","0","2","2","2"],
 "cells": [{
 "row": 0,
 "column": 0,
-"value": "34.2",
+"value": "=c3",
 "format": "N",
-"decimals": 3
+"decimals": -33686019
 },
 {
 "row": 0,
 "column": 1,
-"value": "2",
-"format": "N",
-"decimals": 4
-},
-{
-"row": 0,
-"column": 4,
-"value": "4",
-"format": "N",
-"decimals": 5
-},
-{
-"row": 0,
-"column": 25,
-"value": "1",
-"format": "N",
-"decimals": 1
-},
-{
-"row": 1,
-"column": 25,
-"value": "=a1-b1",
-"format": "N",
-"decimals": 14
-},
-{
-"row": 2,
-"column": 4,
-"value": "=a1-e1",
+"value": "10",
 "format": "N",
 "decimals": 2
 },
 {
-"row": 3,
-"column": 1,
-"value": "",
-"format": "D",
+"row": 0,
+"column": 10,
+"value": "=w1",
+"format": "T",
 "decimals": -1
+},
+{
+"row": 0,
+"column": 22,
+"value": "=k1+2",
+"format": "T",
+"decimals": -1
+},
+{
+"row": 1,
+"column": 0,
+"value": "123",
+"format": "N",
+"decimals": -33686019
+},
+{
+"row": 1,
+"column": 1,
+"value": "=a2",
+"format": "N",
+"decimals": 2
+},
+{
+"row": 1,
+"column": 22,
+"value": "=2",
+"format": "N",
+"decimals": 0
+},
+{
+"row": 2,
+"column": 2,
+"value": "=a1+2",
+"format": "N",
+"decimals": 4
+},
+{
+"row": 2,
+"column": 22,
+"value": "=2*w2",
+"format": "N",
+"decimals": 0
 }
 ]}

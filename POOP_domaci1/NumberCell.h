@@ -37,7 +37,7 @@ public:
 	static bool staticValidInput(string input);
 
 
-	vector<string> getReferencedCells() const;
+	vector<NumberCell*> getReferencedCells() const;
 private:
 	//string inputValue iz Cell
 	//Table* myTable iz Cell

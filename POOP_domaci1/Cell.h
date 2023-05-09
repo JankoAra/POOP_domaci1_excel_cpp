@@ -20,9 +20,6 @@ public:
 
 	static string cellDescriptionInJson(int row, int column, Cell* cell);
 
-	//odredjivanje formata celije u tabeli, row pocinje od 1
-	//static char getFormat(int row, char col, Table* table);
-
 
 	virtual ~Cell(){}
 protected:

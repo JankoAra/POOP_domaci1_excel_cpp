@@ -51,6 +51,20 @@ string Formula::getFormulaValueAsString() {
 	return stream.str();
 }
 
+bool Formula::hasCircularRefrence(NumberCell* cell, vector<NumberCell*>& visited) {
+	visited.push_back(cell);
+	try {
+		for (NumberCell* c : cell->getReferencedCells()) {
+			if (find(visited.begin(), visited.end(), c) != visited.end()) return true;
+
+			if (hasCircularRefrence(c, visited)) return true;
+		}
+	}
+	catch (ExpressionNotValid& e) { return true; }
+	visited.pop_back();
+	return false;
+}
+
 
 string Formula::dereferenceCells() const {
 	stringstream infix;

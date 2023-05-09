@@ -186,8 +186,11 @@ void Table::printTable() const {
 				if (cell == nullptr) cellContent = "";
 				else cellContent = cell->getFormattedValue();
 			}
-			if (cellContent == "ERROR") cellContent = "\033[1;31mERROR\033[0m";
-			cout << left << setw(columnWidths[j]) << cellContent << (j == 26 ? "|\n" : "|");
+			if (cellContent == "ERROR") {
+				cout <<"\033[1;31m" << left << setw(columnWidths[j]) << cellContent<<"\033[0m" << (j == 26 ? "|\n" : "|");
+				//cellContent = "\033[1;31mERROR\033[0m";
+			}
+			else cout << left << setw(columnWidths[j]) << cellContent << (j == 26 ? "|\n" : "|");
 		}
 		cout << rowSeparator;
 	}

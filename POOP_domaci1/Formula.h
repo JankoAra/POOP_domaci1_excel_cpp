@@ -4,6 +4,7 @@
 #include "Table2.h"
 #include <string>
 #include <vector>
+#include "NumberCell.h"
 using namespace std;
 
 class Formula {
@@ -16,18 +17,21 @@ public:
 
 	bool isInvalid() const { return invalidExpression; }
 
+	void setInvalid(bool invalid) { invalidExpression = invalid; }
+
 	double calculateFormula();
 
 	string getFormulaValueAsString();
-	
-	
+
+	static bool hasCircularRefrence(NumberCell* cell, vector<NumberCell*>& visited);
+
+
 private:
 	Table* table;
 	string expression;
 	static string getNextToken(string& input, int& index);
 	static string getNextTokenPostfix(string& postfix, int& index);
 	bool invalidExpression = false;
-	vector<string> referencedCells;
 
 	//menja reference na celije za vrednosti celija
 	string dereferenceCells() const;

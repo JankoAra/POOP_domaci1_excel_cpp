@@ -5,7 +5,7 @@
 #include "Parser.h"
 using namespace std;
 
-int main2() {
+int main() {
 	Menu menu;
 	Table* table = nullptr;
 	bool done = false;

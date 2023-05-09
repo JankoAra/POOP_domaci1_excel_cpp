@@ -4,7 +4,7 @@
 #include <iostream>
 #include "Formula.h"
 #include "JSONParser.h"
-int main() {
+int main2() {
 	Table table;
 	NumberCell* n1 = new NumberCell(&table, "=aa11*e3e3*b2121-b9b9-20b+a1-a2.2/a10-2.*j1");
 	n1->getReferencedCells();
