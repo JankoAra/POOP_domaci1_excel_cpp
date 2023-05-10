@@ -17,7 +17,7 @@ public:
 	void setDecimalSpaces(int d) { decimalSpaces = d; }
 	int getDecimalSpaces() const { return decimalSpaces; }
 
-	//vraca numericku vrednost celije, sluzi za dereferenciranje u izrazima; baca ExpressionNotValid ako je vrednost ERROR
+	//vraca numericku vrednost celije, poziva se iz Formula::dereferenceCells, garantovano se poziva za ispravne izraze
 	double getNumberValue() const;
 
 	//vraca string koji prestavlja broj sa odredjenim brojem decimala ili "ERROR" ako je izraz nevalidan; sluzi za ispis celije
@@ -36,6 +36,7 @@ public:
 	//vraca true ako je input string koji predstavlja broj ili je formula
 	static bool staticValidInput(string input);
 
+	static bool hasCircularRefrence(NumberCell* cell, vector<NumberCell*>& visited);
 
 	vector<NumberCell*> getReferencedCells() const;
 private:

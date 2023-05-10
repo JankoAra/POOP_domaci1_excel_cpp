@@ -23,8 +23,9 @@ public:
 
 	string getFormulaValueAsString();
 
-	static bool hasCircularRefrence(NumberCell* cell, vector<NumberCell*>& visited);
-
+	
+	//menja reference na celije za vrednosti celija
+	string dereferenceCells();
 
 private:
 	Table* table;
@@ -34,7 +35,9 @@ private:
 	bool invalidExpression = false;
 
 	//menja reference na celije za vrednosti celija
-	string dereferenceCells() const;
+	//string dereferenceCells() const;
+
+	
 
 	//expression moze sadrzati samo brojeve i operatore, bez referenci na celije, bez razmaka, bez =
 	static string infixToPostfix(string expression);

@@ -16,12 +16,7 @@ public:
 	}
 };
 
-class UnknownState : public exception {
-public:
-	const char* what() const noexcept override {
-		return "Nepoznato stanje!";
-	}
-};
+class FormulaCalculationError : public exception {};
 
 class FormattingError : public exception {
 public:
@@ -72,21 +67,21 @@ public:
 	}
 };
 
-class FormulaParameterNotNumber : public exception {
+class FormulaParameterNotNumber : public FormulaCalculationError {
 public:
 	const char* what() const noexcept override {
 		return "Parametar formule nije broj";
 	}
 };
 
-class NotEnoughParentheses : public exception {
+class NotEnoughParentheses : public FormulaCalculationError {
 public:
 	const char* what() const noexcept override {
 		return "Izraz nije validan jer je broj otvorenih i zatvorenih zagrada nejednak";
 	}
 };
 
-class ExpressionNotValid : public exception {
+class ExpressionNotValid : public FormulaCalculationError {
 public:
 	const char* what() const noexcept override {
 		return "Izraz nije ispravan";
@@ -100,21 +95,21 @@ public:
 	}
 };
 
-class DivisionByZero : public exception {
+class DivisionByZero : public FormulaCalculationError {
 public:
 	const char* what() const noexcept override {
 		return "Deljenje nulom nije dozvoljeno";
 	}
 };
 
-class FormulaDestinationNotNumber : public exception {
+class FormulaDestinationNotNumber : public FormulaCalculationError {
 public:
 	const char* what() const noexcept override {
 		return "Celija u koju se upisuje formula nije formatirana kao broj";
 	}
 };
 
-class RecursiveReference : public exception {
+class RecursiveReference : public FormulaCalculationError {
 public:
 	const char* what() const noexcept override {
 		return "Uocena je rekurzivna referenca u izrazu";

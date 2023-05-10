@@ -16,32 +16,10 @@ Formula::Formula(string exp, Table* t) {
 }
 
 double Formula::calculateFormula() {
-	try {
-		string dereferenced = dereferenceCells();
-		string postfix = Formula::infixToPostfix(dereferenced);
-		double result = Formula::calculatePostfix(postfix);
-		return result;
-	}
-	catch (DivisionByZero& err) {
-		invalidExpression = true;
-		return 0;
-	}
-	catch (FormulaParameterNotNumber& err) {
-		invalidExpression = true;
-		return 0;
-	}
-	catch (ExpressionNotValid& err) {
-		invalidExpression = true;
-		return 0;
-	}
-	catch (CellNotExists& err) {
-		invalidExpression = true;
-		return 0;
-	}
-	catch (RecursiveReference& err) {
-		invalidExpression = true;
-		return 0;
-	}
+	string dereferenced = dereferenceCells();
+	string postfix = Formula::infixToPostfix(dereferenced);
+	double result = Formula::calculatePostfix(postfix);
+	return result;
 }
 
 string Formula::getFormulaValueAsString() {
@@ -51,55 +29,96 @@ string Formula::getFormulaValueAsString() {
 	return stream.str();
 }
 
-bool Formula::hasCircularRefrence(NumberCell* cell, vector<NumberCell*>& visited) {
-	visited.push_back(cell);
-	try {
-		for (NumberCell* c : cell->getReferencedCells()) {
-			if (find(visited.begin(), visited.end(), c) != visited.end()) return true;
 
-			if (hasCircularRefrence(c, visited)) return true;
-		}
-	}
-	catch (ExpressionNotValid& e) { return true; }
-	visited.pop_back();
-	return false;
-}
+//string Formula::dereferenceCells() const {
+//	stringstream infix;
+//	stringstream cellName;
+//	for (char c : this->expression) {
+//		if (c == '=') continue;
+//		if (isalpha(c)) {
+//			cellName << c;
+//		}
+//		else if (isdigit(c) && cellName.str() != "") {
+//			cellName << c;
+//		}
+//		else {
+//			if (cellName.str() != "") {
+//				Cell* cell = table->getCell(cellName.str());
+//				//if (cell && cell->getInputValue() == expression) throw RecursiveReference();
+//				//if (cell == nullptr && table->columnFormats[toupper(cellName.str()[0]) - 65] != 'N') throw FormulaParameterNotNumber();
+//				//if (cell && cell->getFormat() != 'N') throw FormulaParameterNotNumber();
+//				cellName.str("");
+//				infix << (cell ? ((NumberCell*)cell)->getNumberValue() : 0) << c;
+//			}
+//			else {
+//				infix << c;
+//			}
+//		}
+//	}
+//	if (cellName.str() != "") {
+//		Cell* cell = table->getCell(cellName.str());
+//		//if (cell && cell->getInputValue() == expression) throw RecursiveReference();
+//		//if (cell == nullptr && table->columnFormats[toupper(cellName.str()[0]) - 65] != 'N') throw FormulaParameterNotNumber();
+//		//if (cell && cell->getFormat() != 'N') throw FormulaParameterNotNumber();
+//		cellName.str("");
+//		infix << (cell ? ((NumberCell*)cell)->getNumberValue() : 0);
+//	}
+//	return infix.str();
+//}
 
-
-string Formula::dereferenceCells() const {
-	stringstream infix;
-	stringstream cellName;
+string Formula::dereferenceCells() {
+	//podela izraza na tokene
+	set<char> ops = { '+', '-', '*', '/', '(', ')', '=' };
+	vector<string> tokens;
+	stringstream stream("");
 	for (char c : this->expression) {
-		if (c == '=') continue;
-		if (isalpha(c)) {
-			cellName << c;
-		}
-		else if (isdigit(c) && cellName.str() != "") {
-			cellName << c;
+		if (ops.count(c)) {
+			if (!stream.str().empty()) {
+				tokens.push_back(stream.str());
+				stream.str("");
+			}
+			tokens.push_back(string(1, c));
 		}
 		else {
-			if (cellName.str() != "") {
-				Cell* cell = table->getCell(cellName.str());
-				if (cell && cell->getInputValue() == expression) throw RecursiveReference();
-				if (cell == nullptr && table->columnFormats[toupper(cellName.str()[0]) - 65] != 'N') throw FormulaParameterNotNumber();
-				if (cell && cell->getFormat() != 'N') throw FormulaParameterNotNumber();
-				cellName.str("");
-				infix << (cell ? ((NumberCell*)cell)->getNumberValue() : 0) << c;
-			}
-			else {
-				infix << c;
-			}
+			stream << c;
 		}
 	}
-	if (cellName.str() != "") {
-		Cell* cell = table->getCell(cellName.str());
-		if (cell && cell->getInputValue() == expression) throw RecursiveReference();
-		if (cell == nullptr && table->columnFormats[toupper(cellName.str()[0]) - 65] != 'N') throw FormulaParameterNotNumber();
-		if (cell && cell->getFormat() != 'N') throw FormulaParameterNotNumber();
-		cellName.str("");
-		infix << (cell ? ((NumberCell*)cell)->getNumberValue() : 0);
+	if (!stream.str().empty()) {
+		tokens.push_back(stream.str());
+		stream.str("");
 	}
-	return infix.str();
+
+	//provera da li su tokeni ispravni
+	set<string> opsString = { "+", "-", "*", "/", "(", ")", "=" };
+	auto isNumber = [](string s) {
+		regex pattern("(^\\d*\\.?\\d+$|^\\d+\\.?\\d*$)");
+		return regex_match(s, pattern);
+	};
+	auto isCellName = [](string s) {
+		regex pattern("^[A-Za-z]\\d+$");
+		return regex_match(s, pattern);
+	};
+	for (int i = 0; i < tokens.size(); i++) {
+		string& tok = tokens[i];
+		if (tok == "=" && i != 0) throw ExpressionNotValid();
+		if (opsString.count(tok)) continue;
+		if (isNumber(tok)) continue;
+		if (isCellName(tok)) {
+			// referencirana celija je sigurno broj
+			NumberCell* cell = (NumberCell*)table->getCell(tok);
+			double val = cell ? cell->getNumberValue() : 0;
+			stream << val;
+			tok = stream.str();
+			stream.str("");
+			continue;
+		}
+		//neka greska
+		throw CellNotExists();
+	}
+	for (string& tok : tokens) {
+		if (tok != "=") stream << tok;
+	}
+	return stream.str();
 }
 
 string Formula::infixToPostfix(string expression) {

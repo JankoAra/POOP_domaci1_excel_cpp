@@ -117,9 +117,11 @@ void Table::insertCellValue() {
 
 	try {
 		char format = Table::getCellFormat(row, column);
-		if (isFormula) format = 'N';
 		int decimalsToSet = 0;
 		if (format == 'N') decimalsToSet = oldCell ? ((NumberCell*)oldCell)->getDecimalSpaces() : columnDecimals[column - 65];
+		if (isFormula) {
+			format = 'N';
+		}
 		newCell = createNewCellOfFormat(format, line, decimalsToSet);
 
 		//napravi ActionRecord

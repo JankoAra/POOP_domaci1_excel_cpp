@@ -12,17 +12,21 @@ double NumberCell::getNumberValue() const {
 		//nije formula u pitanju
 		return stod(inputValue);
 	}
+	//moguce samo ispravne formule
 	Formula f(inputValue, myTable);
-	vector<NumberCell*> visited;
+	return f.calculateFormula();
+
+
+	/*vector<NumberCell*> visited;
 	double formulaValue = 0;
-	if (f.hasCircularRefrence((NumberCell*)this, visited)) f.setInvalid(true);
+	if (NumberCell::hasCircularRefrence((NumberCell*)this, visited)) f.setInvalid(true);
 	else formulaValue = f.calculateFormula();
 	if (f.isInvalid()) {
 		throw ExpressionNotValid();
 	}
 	else {
 		return formulaValue;
-	}
+	}*/
 }
 
 string NumberCell::getFormattedValue() const {
@@ -37,14 +41,27 @@ string NumberCell::getFormattedValue() const {
 		Formula f(inputValue, myTable);
 		vector<NumberCell*> visited;
 		double formulaValue = 0;
-		if (f.hasCircularRefrence((NumberCell*)this, visited)) f.setInvalid(true);
-		else formulaValue = f.calculateFormula();
-		if (f.isInvalid()) {
-			stream << "ERROR";
+		bool circularReferenceExists = false;
+		bool unallowedReferenceExists = false;	//flag da li se referencira celija koja nije formatirana kao broj
+		try {
+			circularReferenceExists = NumberCell::hasCircularRefrence((NumberCell*)this, visited);
 		}
-		else {
-			stream << fixed << setprecision(this->decimalSpaces) << formulaValue;
+		catch (FormulaParameterNotNumber& err) {
+			unallowedReferenceExists = true;
 		}
+		if (circularReferenceExists || unallowedReferenceExists) return "ERROR";
+
+		// i dalje u izrazu moze biti nepostojecih celija ili gresaka u izrazu(deljenje nulom, neuparene zagrade...)
+		try {
+			formulaValue = f.calculateFormula();
+		}
+		catch (FormulaCalculationError& err) {
+			return "ERROR";
+		}
+		catch (CellNotExists& err) {
+			return "ERROR";
+		}
+		stream << fixed << setprecision(this->decimalSpaces) << formulaValue;
 	}
 	return stream.str();
 }
@@ -65,11 +82,11 @@ bool NumberCell::staticValidInput(string input) {
 	return true;
 }
 
-vector<NumberCell*> NumberCell::getReferencedCells() const{
+vector<NumberCell*> NumberCell::getReferencedCells() const {
 	set<string> refCellNames;
 	vector<NumberCell*> refCells;
 	if (inputValue[0] != '=') return refCells;
-	regex cellNamePattern("(#|[^A-Za-z0-9])([A-Za-z]\\d+)($|[^A-Za-z0-9])");
+	regex cellNamePattern("(^|[^A-Za-z0-9])([A-Za-z]\\d+)($|[^A-Za-z0-9])");
 	sregex_iterator iter(inputValue.begin(), inputValue.end(), cellNamePattern);
 	sregex_iterator end;
 
@@ -80,12 +97,23 @@ vector<NumberCell*> NumberCell::getReferencedCells() const{
 		refCellNames.insert(cellName);
 		iter++;
 	}
-	for (auto& a : refCellNames) {
-		Cell* cell = myTable->getCell(a);
-		char format = cell==nullptr ? myTable->getColumnFormats()[a[0]-65] : cell->getFormat();
-		if (format != 'N') throw ExpressionNotValid();
+	for (auto& cellName : refCellNames) {
+		Cell* cell = myTable->getCell(cellName);
+		char format = cell == nullptr ? myTable->getColumnFormats()[cellName[0] - 65] : cell->getFormat();
+		if (format != 'N') throw FormulaParameterNotNumber();
 		if (cell == nullptr) continue;
 		refCells.push_back((NumberCell*)cell);
 	}
 	return refCells;
+}
+
+bool NumberCell::hasCircularRefrence(NumberCell* cell, vector<NumberCell*>& visited) {
+	visited.push_back(cell);
+	for (NumberCell* c : cell->getReferencedCells()) {
+		if (find(visited.begin(), visited.end(), c) != visited.end()) return true;
+
+		if (hasCircularRefrence(c, visited)) return true;
+	}
+	visited.pop_back();
+	return false;
 }

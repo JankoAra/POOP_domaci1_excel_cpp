@@ -1,10 +1,10 @@
 {
-"globalColumnFormats": ["T","N","N","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T","T"],
-"globalColumnDecimals": ["0","2","4","2","2","2","2","2","2","2","0","2","2","2","2","2","2","2","2","2","2","2","0","2","2","2"],
+"globalColumnFormats": ["T","N","T","T","T","T","T","T","T","T","N","T","T","T","T","T","T","T","T","T","T","T","N","T","T","T"],
+"globalColumnDecimals": ["0","2","0","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2"],
 "cells": [{
 "row": 0,
 "column": 0,
-"value": "=c3",
+"value": "=102",
 "format": "N",
 "decimals": -33686019
 },
@@ -18,16 +18,16 @@
 {
 "row": 0,
 "column": 10,
-"value": "=w1",
-"format": "T",
-"decimals": -1
+"value": "=41",
+"format": "N",
+"decimals": 2
 },
 {
 "row": 0,
 "column": 22,
 "value": "=k1+2",
-"format": "T",
-"decimals": -1
+"format": "N",
+"decimals": 2
 },
 {
 "row": 1,
@@ -48,20 +48,20 @@
 "column": 22,
 "value": "=2",
 "format": "N",
-"decimals": 0
+"decimals": 2
 },
 {
 "row": 2,
 "column": 2,
 "value": "=a1+2",
-"format": "N",
-"decimals": 4
+"format": "T",
+"decimals": -1
 },
 {
 "row": 2,
 "column": 22,
 "value": "=2*w2",
 "format": "N",
-"decimals": 0
+"decimals": 2
 }
 ]}

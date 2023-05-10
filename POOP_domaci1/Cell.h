@@ -15,10 +15,13 @@ public:
 	virtual void setInputValue(string val) { inputValue = val; }
 
 	virtual char getFormat() = 0;
+
+	//poziva se pri ispisu sadrzaja celije u odgovarajucem formatu
 	virtual string getFormattedValue() const = 0;
 	virtual bool validInputForFormat(string input) = 0;
 
 	static string cellDescriptionInJson(int row, int column, Cell* cell);
+
 
 
 	virtual ~Cell(){}
