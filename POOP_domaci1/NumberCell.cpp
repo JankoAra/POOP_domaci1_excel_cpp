@@ -15,18 +15,6 @@ double NumberCell::getNumberValue() const {
 	//moguce samo ispravne formule
 	Formula f(inputValue, myTable);
 	return f.calculateFormula();
-
-
-	/*vector<NumberCell*> visited;
-	double formulaValue = 0;
-	if (NumberCell::hasCircularRefrence((NumberCell*)this, visited)) f.setInvalid(true);
-	else formulaValue = f.calculateFormula();
-	if (f.isInvalid()) {
-		throw ExpressionNotValid();
-	}
-	else {
-		return formulaValue;
-	}*/
 }
 
 string NumberCell::getFormattedValue() const {

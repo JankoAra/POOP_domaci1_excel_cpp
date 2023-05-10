@@ -151,7 +151,7 @@
     <ClCompile Include="NumberCell.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="quickTest.cpp" />
-    <ClCompile Include="Table2.cpp" />
+    <ClCompile Include="Table.cpp" />
     <ClCompile Include="TextCell.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -165,7 +165,7 @@
     <ClInclude Include="Menu.h" />
     <ClInclude Include="NumberCell.h" />
     <ClInclude Include="Parser.h" />
-    <ClInclude Include="Table2.h" />
+    <ClInclude Include="Table.h" />
     <ClInclude Include="TextCell.h" />
   </ItemGroup>
   <ItemGroup>

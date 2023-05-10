@@ -29,44 +29,7 @@ string Formula::getFormulaValueAsString() {
 	return stream.str();
 }
 
-
-//string Formula::dereferenceCells() const {
-//	stringstream infix;
-//	stringstream cellName;
-//	for (char c : this->expression) {
-//		if (c == '=') continue;
-//		if (isalpha(c)) {
-//			cellName << c;
-//		}
-//		else if (isdigit(c) && cellName.str() != "") {
-//			cellName << c;
-//		}
-//		else {
-//			if (cellName.str() != "") {
-//				Cell* cell = table->getCell(cellName.str());
-//				//if (cell && cell->getInputValue() == expression) throw RecursiveReference();
-//				//if (cell == nullptr && table->columnFormats[toupper(cellName.str()[0]) - 65] != 'N') throw FormulaParameterNotNumber();
-//				//if (cell && cell->getFormat() != 'N') throw FormulaParameterNotNumber();
-//				cellName.str("");
-//				infix << (cell ? ((NumberCell*)cell)->getNumberValue() : 0) << c;
-//			}
-//			else {
-//				infix << c;
-//			}
-//		}
-//	}
-//	if (cellName.str() != "") {
-//		Cell* cell = table->getCell(cellName.str());
-//		//if (cell && cell->getInputValue() == expression) throw RecursiveReference();
-//		//if (cell == nullptr && table->columnFormats[toupper(cellName.str()[0]) - 65] != 'N') throw FormulaParameterNotNumber();
-//		//if (cell && cell->getFormat() != 'N') throw FormulaParameterNotNumber();
-//		cellName.str("");
-//		infix << (cell ? ((NumberCell*)cell)->getNumberValue() : 0);
-//	}
-//	return infix.str();
-//}
-
-string Formula::dereferenceCells() {
+string Formula::dereferenceCells() const{
 	//podela izraza na tokene
 	set<char> ops = { '+', '-', '*', '/', '(', ')', '=' };
 	vector<string> tokens;

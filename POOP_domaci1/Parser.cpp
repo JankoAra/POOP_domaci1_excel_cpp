@@ -2,6 +2,10 @@
 #include <iostream>
 #include <regex>
 #include "Menu.h"
+#include "Errors.h"
+#include "CSVParser.h"
+#include "JSONParser.h"
+
 int Parser::setFileNameAndChooseFileFormat(){
 	cout << "Unesite ime/putanju fajla: ";
 	string fName;
@@ -9,7 +13,7 @@ int Parser::setFileNameAndChooseFileFormat(){
 	smatch match;
 	getline(cin, fName);
 	if (!regex_search(fName, match, pattern)) {
-		Menu::printErrorMsg("Neispravno ime fajla");
+		printErrorMsg("Neispravno ime fajla");
 		return 0;
 	}
 	string fileFormat = match[2].str();
@@ -23,4 +27,21 @@ int Parser::setFileNameAndChooseFileFormat(){
 		fileName = fName;
 	}
 	return ret;
+}
+
+Parser* Parser::makeParser(){
+	cout << "Unesite ime/putanju fajla (obavezna ekstenzija .csv ili .json): ";
+	string fName;
+	regex pattern("^\\s*([^\\.]+)\\.([A-Za-z0-9]+)\\s*$");
+	smatch match;
+	getline(cin, fName);
+	if (!regex_search(fName, match, pattern)) throw FileNameError();
+	string fileFormat = match[2].str();
+	if (fileFormat == "csv") {
+		return new CSVParser(fName);
+	}
+	else if (fileFormat == "json") {
+		return new JSONParser(fName);
+	}
+	return nullptr;
 }

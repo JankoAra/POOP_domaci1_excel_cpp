@@ -1,5 +1,5 @@
 #include "Cell.h"
-#include "Table2.h"
+#include "Table.h"
 #include <sstream>
 #include "NumberCell.h"
 #include <regex>
@@ -17,10 +17,3 @@ string Cell::cellDescriptionInJson(int row, int column, Cell* cell) {
 	stream << "}";
 	return stream.str();
 }
-
-//row se broji od 1, col je veliko slovo
-//char Cell::getFormat(int row, char col, Table* table) {
-//	Cell* cell = table->getCell(row, col);
-//	if (cell) return cell->getFormat();
-//	return table->getColumnFormats()[col - 65];
-//}

@@ -39,7 +39,7 @@
     <ClCompile Include="DateCell.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Table2.cpp">
+    <ClCompile Include="Table.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="quickTest.cpp">
@@ -80,7 +80,7 @@
     <ClInclude Include="DateCell.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Table2.h">
+    <ClInclude Include="Table.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CSVParser.h">

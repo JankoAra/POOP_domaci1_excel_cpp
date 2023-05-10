@@ -2,7 +2,7 @@
 #include "Cell.h"
 #include "NumberCell.h"
 
-#include "Table2.h"
+#include "Table.h"
 
 Action::Action(int r, int c, string oldVal, string newVal, char newFormat, int newDecimals, Table* table) {
 	row = r;

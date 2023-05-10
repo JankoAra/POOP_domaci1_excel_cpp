@@ -1,7 +1,7 @@
 #ifndef _FORMULA_CLASS
 #define _FORMULA_CLASS
 
-#include "Table2.h"
+#include "Table.h"
 #include <string>
 #include <vector>
 #include "NumberCell.h"
@@ -25,7 +25,7 @@ public:
 
 	
 	//menja reference na celije za vrednosti celija
-	string dereferenceCells();
+	string dereferenceCells() const;
 
 private:
 	Table* table;

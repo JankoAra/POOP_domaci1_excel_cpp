@@ -99,26 +99,6 @@ int Menu::getMenuInputFromConsole() {
 	return choice;
 }
 
-void Menu::printErrorMsg(string errmsg) {
-	cout << "\033[1;31m" << errmsg << "!" << "\033[0m" << endl;
-}
-
-Parser* Menu::makeParser() {
-	cout << "Unesite ime/putanju fajla (obavezna ekstenzija .csv ili .json): ";
-	string fName;
-	regex pattern("^\\s*([^\\.]+)\\.([A-Za-z0-9]+)\\s*$");
-	smatch match;
-	getline(cin, fName);
-	if (!regex_search(fName, match, pattern)) throw FileNameError();
-	string fileFormat = match[2].str();
-	if (fileFormat == "csv") {
-		return new CSVParser(fName);
-	}
-	else if (fileFormat == "json") {
-		return new JSONParser(fName);
-	}
-	return nullptr;
-}
 
 bool Menu::askToSave() {
 	cout << "Da li zelite da sacuvate tabelu? [d/n]";

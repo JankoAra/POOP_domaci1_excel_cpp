@@ -1,4 +1,4 @@
-#include "Table2.h"
+#include "Table.h"
 #include "TextCell.h"
 #include "NumberCell.h"
 #include <iostream>

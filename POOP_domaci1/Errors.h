@@ -6,8 +6,13 @@
 #include <iostream>
 using namespace std;
 
+
+//ispisuje prosledjeni string kao gresku crvenim slovima
+inline void printErrorMsg(string errmsg) { cout << "\033[1;31m" << errmsg << "!" << "\033[0m" << endl; }
+
 //ispis poruke o gresci u crvenoj boji
-inline void printErrorMsg(exception& err) { cout << "\033[1;31m" << err.what() << "!" << "\033[0m" << endl; }
+inline void printErrorMsg(exception& err) { printErrorMsg(string(err.what())); }
+
 
 class OptionNonExistent : public exception {
 public:

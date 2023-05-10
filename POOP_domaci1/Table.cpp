@@ -1,4 +1,4 @@
-#include "Table2.h"
+#include "Table.h"
 #include "TextCell.h"
 #include "DateCell.h"
 #include "NumberCell.h"
@@ -189,7 +189,7 @@ void Table::printTable() const {
 				else cellContent = cell->getFormattedValue();
 			}
 			if (cellContent == "ERROR") {
-				cout <<"\033[1;31m" << left << setw(columnWidths[j]) << cellContent<<"\033[0m" << (j == 26 ? "|\n" : "|");
+				cout << "\033[1;31m" << left << setw(columnWidths[j]) << cellContent << "\033[0m" << (j == 26 ? "|\n" : "|");
 				//cellContent = "\033[1;31mERROR\033[0m";
 			}
 			else cout << left << setw(columnWidths[j]) << cellContent << (j == 26 ? "|\n" : "|");
@@ -200,7 +200,10 @@ void Table::printTable() const {
 }
 
 void Table::undo(bool redoFlag) {
-	if (undoStack.empty()) return;
+	if (undoStack.empty()) {
+		cout << "Undo stek prazan!" << endl;
+		return;
+	}
 	Action record = undoStack.top();
 	undoStack.pop();
 	if (redoFlag == false) {
@@ -239,7 +242,7 @@ void Table::undo(bool redoFlag) {
 		}
 	}
 	else {
-		Menu::printErrorMsg("Record nije ispravan");
+		printErrorMsg("Record nije ispravan!");
 	}
 }
 
@@ -278,8 +281,8 @@ void Table::changeRowFormat(int row, char formatToSet, int decimals) {
 			if (!newFormatFitsInput(formatToSet, cell->getInputValue())) throw FormattingError();
 		}
 		catch (FormattingError& err) {
-			Menu::printErrorMsg("Nemoguce promeniti format svih celija u redu jer neka od " \
-				"njih sadrzi vrednost koja ne odgovara novom formatu");
+			printErrorMsg("Nemoguce promeniti format svih celija u redu jer neka od " \
+				"njih sadrzi vrednost koja ne odgovara novom formatu!");
 			throw UnsuccessfulFormat();
 		}
 
@@ -305,8 +308,8 @@ void Table::changeColumnFormat(char column, char formatToSet, int decimals) {
 			if (!newFormatFitsInput(formatToSet, cell->getInputValue())) throw FormattingError();
 		}
 		catch (FormattingError& err) {
-			Menu::printErrorMsg("Nemoguce promeniti format svih celija u koloni jer neka od " \
-				"njih sadrzi vrednost koja ne odgovara novom formatu");
+			printErrorMsg("Nemoguce promeniti format svih celija u koloni jer neka od " \
+				"njih sadrzi vrednost koja ne odgovara novom formatu!");
 			throw UnsuccessfulFormat();
 		}
 	}
@@ -343,7 +346,7 @@ void Table::formatTable() {
 	else if (regex_search(line, match, rowPattern)) formatRow = true;
 	else if (regex_search(line, match, columnPattern)) formatColumn = true;
 	else {
-		Menu::printErrorMsg("Unos nije ispravan. Povratak u glavni meni");
+		printErrorMsg("Unos nije ispravan. Povratak u glavni meni");
 		return;
 	}
 	auto pair = Menu::chooseFormatMenu();
@@ -404,7 +407,7 @@ bool Table::newFormatFitsInput(char format, string input) const {
 	return newFormatFitsInput(f, input);
 }
 
-Table::~Table(){
+Table::~Table() {
 	clearStack(undoStack);
 	clearStack(redoStack);
 	for (auto& row : cells) {

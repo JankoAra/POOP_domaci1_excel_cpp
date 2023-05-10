@@ -1,9 +1,8 @@
 #ifndef _PARSER_CLASS
 #define _PARSER_CLASS
 #include <string>
-#include "Table2.h"
+#include "Table.h"
 using namespace std;
-
 
 class Parser{
 public:
@@ -12,6 +11,9 @@ public:
 	virtual void saveTable(Table* table) = 0;
 	int setFileNameAndChooseFileFormat();
 	string getFileName() { return fileName; }
+
+	//pita za ime fajla nad kojim se radi i na osnovu ekstenzije fajla vraca odgovarajuci parser
+	static Parser* makeParser();
 protected:
 	string fileName;
 };

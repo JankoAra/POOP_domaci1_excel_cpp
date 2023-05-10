@@ -22,11 +22,7 @@ public:
 	//vraca true ukoliko korisnik izabere opciju da zeli da sacuva trenutnu tabelu, inace false
 	static bool askToSave();
 
-	//pita za ime fajla nad kojim se radi i na osnovu ekstenzije fajla vraca odgovarajuci parser
-	static Parser* makeParser();
 
-	//ispisuje prosledjeni string kao gresku crvenim slovima
-	static void printErrorMsg(string errmsg);
 
 	static const int DEFAULT_LINE_LEN = 50;
 };
