@@ -33,10 +33,10 @@ void Menu::displayMainMenu() {
 	mainMenuOptions.push_back("REDO");								//4
 	mainMenuOptions.push_back("SAVE");								//5
 	mainMenuOptions.push_back("SAVE AS");							//6
-	mainMenuOptions.push_back("SAVE AND QUIT");						//7
-	mainMenuOptions.push_back("RESETUJ TABELU");					//8
-	mainMenuOptions.push_back("PROMENI SHEET");						//9
-	mainMenuOptions.push_back("VRATI SE NA POCETNI MENI");			//10
+	//mainMenuOptions.push_back("SAVE AND QUIT");						
+	//mainMenuOptions.push_back("RESETUJ TABELU");					
+	//mainMenuOptions.push_back("PROMENI SHEET");					
+	mainMenuOptions.push_back("VRATI SE NA POCETNI MENI");			//7
 	mainMenuOptions.push_back("UGASI PROGRAM");						//0
 
 	auto printLn = [](char c) {string line(DEFAULT_LINE_LEN, c); cout << line << endl; };
