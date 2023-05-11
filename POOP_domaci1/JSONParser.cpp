@@ -16,47 +16,44 @@ void JSONParser::loadTable(Table* table) {
 		throw FileNotOpen();
 	}
 	string line;
+	stringstream stream;
+	stream << file.rdbuf();
+	string JSONString = stream.str();
+	stream.str("");
 
 	//citanje globalnih formata za kolone
-	string targetName = "\"globalColumnFormats\": [";
-	while (getline(file, line)) {
-		size_t pos = line.find(targetName);
-		if (pos == string::npos) continue;
-		size_t cutOffset = pos + targetName.length() - 1;
-		string charArray = line.substr(cutOffset, line.length() - cutOffset - 1);
-		vector<char> chars = getCharsFromJsonArray(charArray);
-		for (int i = 0; i < 26; i++) table->getColumnFormats()[i] = chars[i];
-		break;
-	}
+	size_t pos = JSONString.find("\"globalColumnFormats\"");
+	if (pos == string::npos) throw JSONDataError();
+	size_t openBracket = JSONString.find("[", pos);
+	size_t closedBracket = JSONString.find("]", openBracket);
+	string formatsArray = JSONString.substr(openBracket, closedBracket - openBracket + 1);
+	vector<char> chars = getCharsFromJsonArray(formatsArray);
+	for (int i = 0; i < 26; i++) table->getColumnFormats()[i] = chars[i];
 
 	//citanje globalnih decimala za kolone
-	targetName = "\"globalColumnDecimals\": [";
-	while (getline(file, line)) {
-		size_t pos = line.find(targetName);
-		if (pos == string::npos) continue;
-		size_t cutOffset = pos + targetName.length() - 1;
-		string charArray = line.substr(cutOffset, line.length() - cutOffset - 1);
-		vector<int> ints = getIntsFromJsonArray(charArray);
-		for (int i = 0; i < 26; i++) table->getColumnDecimals()[i] = ints[i];
-		break;
-	}
+	pos = JSONString.find("\"globalColumnDecimals\"");
+	if (pos == string::npos) throw JSONDataError();
+	openBracket = JSONString.find("[", pos);
+	closedBracket = JSONString.find("]", openBracket);
+	string decimalsArray = JSONString.substr(openBracket, closedBracket - openBracket + 1);
+	vector<int> ints = getIntsFromJsonArray(decimalsArray);
+	for (int i = 0; i < 26; i++) table->getColumnDecimals()[i] = ints[i];
 
 	//citanje celija
+	pos = JSONString.find("\"cells\"");
+	if (pos == string::npos) throw JSONDataError();
+	openBracket = JSONString.find("[", pos);
+	closedBracket = JSONString.find("]", openBracket);
+	string cellsArrayString = JSONString.substr(openBracket, closedBracket - openBracket + 1);
 	while (true) {
-		char c=' ';
-		stringstream stream;
-		while (c!='{') file.get(c);
-		while (c != '}') {
-			stream << c;
-			file.get(c);
-		}
-		stream << c;
-		JSONCell cellRecord = readJsonCell(stream.str());
+		size_t openCurly = cellsArrayString.find("{");
+		size_t closedCurly = cellsArrayString.find("}");
+		if (openCurly == string::npos || closedCurly == string::npos) break;
+		string jsonCellString = cellsArrayString.substr(openCurly, closedCurly - openCurly + 1);
+		cellsArrayString.erase(openCurly, closedCurly - openCurly + 1);
+		JSONCell cellRecord = readJsonCell(jsonCellString);
 		Cell* cell = table->createNewCellOfFormat(cellRecord.format, cellRecord.value, cellRecord.decimals);
 		table->setCell(cellRecord.row, cellRecord.column, cell);
-		stream.str("");
-		file.get(c);
-		if (c != ',') break;
 	}
 
 	file.close();
@@ -69,20 +66,18 @@ void JSONParser::saveTable(Table* table) {
 
 	//cuvanje globalnih formata za kolone
 	file << "\"globalColumnFormats\": [";
-	//for_each(table->getColumnFormats(), table->getColumnFormats() + 26, [&file](char c) {file << "\"" << c << "\""; });
 	char* columnFormats = table->getColumnFormats();
-	for (int i = 0; i < 26; i++) {
-		file << "\"" << columnFormats[i] << "\"" << (i == 25 ? "" : ",");
-	}
+	for_each(columnFormats, columnFormats + 26, [&file, &columnFormats](char& format) {
+		file << "\"" << format << "\"" << (&format == columnFormats + 25 ? "" : ",");
+		});
 	file << "],\n";
 
 	//cuvanje globalmnih decimala za kolone
 	file << "\"globalColumnDecimals\": [";
-	//for_each(table->getColumnDecimals(), table->getColumnDecimals() + 26, [&file](int i) {file << i; });
 	int* columnDecimals = table->getColumnDecimals();
-	for (int i = 0; i < 26; i++) {
-		file << "\"" << columnDecimals[i] << "\"" << (i == 25 ? "" : ",");
-	}
+	for_each(columnDecimals, columnDecimals + 26, [&file, &columnDecimals](int& decimal) {
+		file << "\"" << decimal << "\"" << (&decimal == columnDecimals + 25 ? "" : ",");
+		});
 	file << "],\n";
 
 	//cuvanje niza celija
@@ -103,7 +98,6 @@ void JSONParser::saveTable(Table* table) {
 		}
 	}
 	file << "]";
-
 
 	file << "}";
 	file.close();
@@ -138,18 +132,18 @@ vector<int> JSONParser::getIntsFromJsonArray(string jsonArray) const {
 
 JSONCell JSONParser::readJsonCell(string jsonCellString) const {
 	//izvuci row
-	regex keyRegex("\"row\": (\\d+),");
+	regex keyRegex("\"row\": (\\d+)");
 	smatch match;
 	if (!regex_search(jsonCellString, match, keyRegex)) throw JSONDataError();
 	int row = stoi(match[1].str());
 
 	//izvuci column
-	keyRegex = "\"column\": (\\d+),";
+	keyRegex = "\"column\": (\\d+)";
 	if (!regex_search(jsonCellString, match, keyRegex)) throw JSONDataError();
 	int column = stoi(match[1].str());
 
 	//izvuci format
-	keyRegex = "\"format\": \"([DTN])\",";
+	keyRegex = "\"format\": \"([DTN])\"";
 	if (!regex_search(jsonCellString, match, keyRegex)) throw JSONDataError();
 	char format = (match[1].str())[0];
 
@@ -159,7 +153,7 @@ JSONCell JSONParser::readJsonCell(string jsonCellString) const {
 	int decimals = stoi(match[1].str());
 
 	//izvuci value
-	keyRegex = "\"value\": \"([[:print:]]*)\",";
+	keyRegex = "\"value\": \"([[:print:]]*)\"";
 	if (!regex_search(jsonCellString, match, keyRegex)) throw JSONDataError();
 	string value = match[1].str();
 	return JSONCell(row, column, value, format, decimals);

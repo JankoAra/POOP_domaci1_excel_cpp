@@ -106,5 +106,8 @@
     <None Include="poem.csv">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="a.json">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

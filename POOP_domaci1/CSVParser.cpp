@@ -30,10 +30,15 @@ void CSVParser::loadTable(Table* table){
 void CSVParser::saveTable(Table* table){
 	ofstream file(fileName);
 	if (!file.is_open()) throw FileNotOpen();
-	//racunanje najveceg reda
+	//racunanje najveceg reda koji ima neki sadrzaj
 	int maxRowNumber = 0;
 	for (auto& rowDesc : table->getData()) {
-		maxRowNumber = max(maxRowNumber, rowDesc.first);
+		for (auto& colDesc : rowDesc.second) {
+			if (colDesc.second && colDesc.second->getInputValue() != "") {
+				maxRowNumber = max(maxRowNumber, rowDesc.first);
+				break;
+			}
+		}
 	}
 	//upis u fajl vrednosti celija
 	for (int i = 0; i < maxRowNumber; i++) {

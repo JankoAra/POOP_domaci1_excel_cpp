@@ -169,6 +169,7 @@
     <ClInclude Include="TextCell.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="a.json" />
     <None Include="fizika ocena.csv" />
     <None Include="poem.csv" />
     <None Include="test.csv" />

@@ -25,15 +25,12 @@ public:
 	virtual void loadTable(Table* table) override;
 	virtual void saveTable(Table* table) override;
 
+private:
+	//string fileName iz Parser
 
 	vector<char> getCharsFromJsonArray(string jsonArray) const;
 	vector<int> getIntsFromJsonArray(string jsonArray) const;
 	JSONCell readJsonCell(string jsonCellString) const;
-
-private:
-	
-
-	//string fileName iz Parser
 };
 
 
