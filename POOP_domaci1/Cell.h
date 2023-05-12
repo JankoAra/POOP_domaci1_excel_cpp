@@ -18,6 +18,7 @@ public:
 
 	//poziva se pri ispisu sadrzaja celije u odgovarajucem formatu
 	virtual string getFormattedValue() const = 0;
+
 	virtual bool validInputForFormat(string input) = 0;
 
 	static string cellDescriptionInJson(int row, int column, Cell* cell);

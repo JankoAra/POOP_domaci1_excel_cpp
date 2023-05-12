@@ -4,13 +4,14 @@
 #include <regex>
 #include "Errors.h"
 #include <iomanip>
+
 void DateCell::setInputValue(string val) {
 	regex blanks("\\s+");
 	if (regex_match(val, blanks) || val == "") {
 		inputValue = "";
 		return;
 	}
-	regex datePattern("^\\s*(\\d{1,2})\\.(\\d{1,2})\\.(\\d{4})\\.\\s*$");
+	regex datePattern("^\\s*(\\d{1,2})\\.(\\d{1,2})\\.(\\d{1,4})\\.\\s*$");
 	if (!regex_match(val, datePattern)) throw CellInputError();
 	string removedBlanks = regex_replace(val, blanks, "");
 	smatch match;
@@ -32,7 +33,6 @@ bool DateCell::validInputForFormat(string input){
 
 bool DateCell::checkValidDate(int d, int m, int y) {
 	if (d <= 0 || m <= 0 || y <= 0 || m > 12 || d > 31) return false;
-	//set<int> thirty = { 4,6,9,11 };
 	set<int> thirtyOne = { 1,3,5,7,8,10,12 };
 	if (d == 31 && thirtyOne.count(m) == 0) return false;
 	if (m == 2 && d <= 28) return true;
@@ -47,7 +47,7 @@ bool DateCell::checkValidDate(int d, int m, int y) {
 bool DateCell::staticValidInput(string input){
 	regex blanks("\\s+");
 	if (regex_match(input, blanks) || input == "") return true;
-	regex datePattern("^\\s*(\\d{1,2})\\.(\\d{1,2})\\.(\\d{4})\\.\\s*$");
+	regex datePattern("^\\s*(\\d{1,2})\\.(\\d{1,2})\\.(\\d{1,4})\\.\\s*$");
 	if (!regex_match(input, datePattern)) return false;
 	string removedBlanks = regex_replace(input, blanks, "");
 	smatch match;

@@ -2,7 +2,6 @@
 #include "Table.h"
 #include <sstream>
 #include "NumberCell.h"
-#include <regex>
 
 string Cell::cellDescriptionInJson(int row, int column, Cell* cell) {
 	stringstream stream;

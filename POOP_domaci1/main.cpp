@@ -62,13 +62,8 @@ int main() {
 			printErrorMsg("Nepostojeca opcija!");
 			continue;
 		}
-		if (choice == 0) {
-			//prekid programa
-			done = true;
-			break;
-		}
-		//pravljenje prazne tabele
-		if (table == nullptr) table = new Table();
+		if (choice == 0) break;	//prekid programa
+		if (table == nullptr) table = new Table();	//pravljenje prazne tabele
 		if (choice == 2) {
 			//ucitavanje tabele iz fajla
 			try {
@@ -84,7 +79,7 @@ int main() {
 		}
 		innerDone = false;
 		while (!done && !innerDone) {
-			if (choice < mainMenuFunctions.size()) table->printTable();	//ne stampa tabelu ako je bila pogresna opcija
+			if (choice < mainMenuFunctions.size()) table->printTable();	//ne stampa ponovo tabelu ako je bila pogresna opcija
 			menu.displayMainMenu();
 			choice = menu.getMenuInputFromConsole();
 			if (choice >= mainMenuFunctions.size()) {

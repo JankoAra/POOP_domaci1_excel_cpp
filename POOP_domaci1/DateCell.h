@@ -7,7 +7,6 @@
 using namespace std;
 class DateCell : public Cell {
 public:
-	//DateCell(string startValue = "", int row = 0, ColumnLetters col = A) :Cell(startValue, row, col) {}
 	DateCell(Table* t, string input = "") :Cell(t, input) {
 		if (!validInputForFormat(input)) throw CellInputError();
 		setInputValue(input);
@@ -20,7 +19,6 @@ public:
 	static bool staticValidInput(string input);
 private:
 	static bool checkValidDate(int d, int m, int y);
-	
 };
 
 

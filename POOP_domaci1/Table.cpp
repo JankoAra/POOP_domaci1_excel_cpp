@@ -117,10 +117,11 @@ void Table::insertCellValue() {
 
 	try {
 		char format = Table::getCellFormat(row, column);
-		int decimalsToSet = 0;
+		int decimalsToSet = -1;
 		if (format == 'N') decimalsToSet = oldCell ? ((NumberCell*)oldCell)->getDecimalSpaces() : columnDecimals[column - 65];
 		if (isFormula) {
 			format = 'N';
+			if (decimalsToSet == -1) decimalsToSet = columnDecimals[column - 65];
 		}
 		newCell = createNewCellOfFormat(format, line, decimalsToSet);
 
@@ -141,14 +142,17 @@ void Table::insertCellValue() {
 
 
 void Table::printTable() const {
-	// Racunaj maksimalne sirine kolona i najveci redni broj reda
+	// Racunamo maksimalne sirine kolona i najveci redni broj reda
 	vector<int> columnWidths(27, 1);
 	int maxRowNumber = 0;
 	for (auto& rowDesc : cells) {
-		ostringstream stream;
-		stream << rowDesc.first + 1;
-		maxRowNumber = max(maxRowNumber, rowDesc.first + 1);
-		columnWidths[0] = max(columnWidths[0], (int)((stream.str()).length()));
+		bool rowEmpty = find_if(rowDesc.second.begin(), rowDesc.second.end(), \
+			[](const pair<const int, Cell*> p) {return p.second->getInputValue() != ""; }) == rowDesc.second.end();
+		if (rowEmpty) continue;
+		int rowNumber = rowDesc.first + 1;
+		int rowNumberLength = (int)(to_string(rowDesc.first + 1).length());
+		maxRowNumber = max(maxRowNumber, rowNumber);
+		columnWidths[0] = max(columnWidths[0], rowNumberLength);
 		for (auto& column : rowDesc.second) {
 			Cell* cell = column.second;
 			if (cell != nullptr) {
@@ -190,7 +194,6 @@ void Table::printTable() const {
 			}
 			if (cellContent == "ERROR") {
 				cout << "\033[1;31m" << left << setw(columnWidths[j]) << cellContent << "\033[0m" << (j == 26 ? "|\n" : "|");
-				//cellContent = "\033[1;31mERROR\033[0m";
 			}
 			else cout << left << setw(columnWidths[j]) << cellContent << (j == 26 ? "|\n" : "|");
 		}
