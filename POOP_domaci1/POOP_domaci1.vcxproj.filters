@@ -109,5 +109,11 @@
     <None Include="a.json">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="javacsv.csv">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="javajson.json">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

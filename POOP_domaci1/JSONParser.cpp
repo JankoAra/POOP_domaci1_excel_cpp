@@ -132,29 +132,37 @@ vector<int> JSONParser::getIntsFromJsonArray(string jsonArray) const {
 
 JSONCell JSONParser::readJsonCell(string jsonCellString) const {
 	//izvuci row
-	regex keyRegex("\"row\": (\\d+)");
+	regex keyRegex("\"row\":(\\d+)");
 	smatch match;
 	if (!regex_search(jsonCellString, match, keyRegex)) throw JSONDataError();
 	int row = stoi(match[1].str());
 
 	//izvuci column
-	keyRegex = "\"column\": (\\d+)";
+	keyRegex = "\"column\":(\\d+)";
 	if (!regex_search(jsonCellString, match, keyRegex)) throw JSONDataError();
 	int column = stoi(match[1].str());
 
 	//izvuci format
-	keyRegex = "\"format\": \"([DTN])\"";
+	keyRegex = "\"format\":\"([DTN])\"";
 	if (!regex_search(jsonCellString, match, keyRegex)) throw JSONDataError();
 	char format = (match[1].str())[0];
 
 	//izvuci decimals
-	keyRegex = "\"decimals\": (-?\\d+)";
+	keyRegex = "\"decimals\":(-?\\d+)";
 	if (!regex_search(jsonCellString, match, keyRegex)) throw JSONDataError();
 	int decimals = stoi(match[1].str());
 
 	//izvuci value
-	keyRegex = "\"value\": \"([[:print:]]*)\"";
+	/*keyRegex = "\"value\":\"([[:print:]]*)\"";
 	if (!regex_search(jsonCellString, match, keyRegex)) throw JSONDataError();
-	string value = match[1].str();
+	string value = match[1].str();*/
+
+	size_t openValue = jsonCellString.find("\"value\":\"");
+	if (openValue == string::npos) throw JSONDataError();
+	size_t offset = string("\"value\":\"").length();
+	size_t closedValue = jsonCellString.find("\"", offset + openValue);
+	if (closedValue == string::npos) throw JSONDataError();
+	string value = jsonCellString.substr(openValue + offset, closedValue - (openValue + offset));
+
 	return JSONCell(row, column, value, format, decimals);
 }

@@ -171,6 +171,8 @@
   <ItemGroup>
     <None Include="a.json" />
     <None Include="fizika ocena.csv" />
+    <None Include="javacsv.csv" />
+    <None Include="javajson.json" />
     <None Include="poem.csv" />
     <None Include="test.csv" />
   </ItemGroup>
